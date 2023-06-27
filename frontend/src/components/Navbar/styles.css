@@ -10,3 +10,11 @@
   width: auto;
   height: 75px;
 }
+
+.login-icon {
+  color: #fff;
+}
+
+.login-icon:hover {
+  color: var(--primary-color);
+}
