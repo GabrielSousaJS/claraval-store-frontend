@@ -1,10 +1,20 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
+import { requestBackend } from "utils/requests";
 import { BASE_URL } from "utils/system";
 
 export function findAll(productName: string) {
-  return axios.get(`${BASE_URL}api/products?name=${productName}`);
+
+  const config: AxiosRequestConfig = {
+    url: `api/products?${productName}`
+  }
+  return requestBackend(config);
 }
 
 export function findProdutsByCategory(id: number) {
-  return axios.get(`${BASE_URL}api/products/filtercategory/${id}`);
+
+  const config: AxiosRequestConfig = {
+    url: `api/products/filtercategory/${id}`
+  }
+
+  return requestBackend(config);
 }

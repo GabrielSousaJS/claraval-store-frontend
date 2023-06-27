@@ -1,6 +1,11 @@
-import axios from "axios";
-import { BASE_URL } from "utils/system";
+import { AxiosRequestConfig } from "axios";
+import { requestBackend } from "utils/requests";
 
 export function findAll() {
-  return axios.get(`${BASE_URL}api/categories`);
+
+  const config: AxiosRequestConfig = {
+    url: 'api/categories'
+  }
+
+  return requestBackend(config);
 }
