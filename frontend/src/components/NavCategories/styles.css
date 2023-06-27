@@ -1,0 +1,30 @@
+.container-category {
+  color: #fff;
+  padding-top: 20px;
+  padding-bottom: 8px;
+}
+
+.main-menu a:hover {
+  color: var(--primary-color);
+}
+
+.main-menu a.active {
+  color: var(--primary-color);
+}
+
+.main-menu {
+  display: flex;
+  font-weight: 700;
+  justify-content: space-between;
+
+  text-transform: uppercase;
+}
+
+.main-menu ul,
+.main-menu li {
+  list-style: none;
+}
+
+.main-menu a {
+  flex: 1;
+}

@@ -1,9 +1,10 @@
 import './assets/styles/custom.scss';
 import './App.css';
+import RoutesApp from 'RoutesApp';
 
 function App() {
   return (
-    <>Qualquer coisa</>
+    <RoutesApp />
   );
 }
 

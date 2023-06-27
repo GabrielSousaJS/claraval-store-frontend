@@ -1,0 +1,12 @@
+.main-nav {
+  color: #fff;
+  min-height: 80px;
+  padding-top: 20px;
+}
+
+.container-logo a {
+  display: flex;
+  justify-content: space-around;
+  width: auto;
+  height: 75px;
+}
