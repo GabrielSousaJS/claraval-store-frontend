@@ -1,29 +1,30 @@
 import "./styles.css";
+
+import { Category } from "types/category";
 import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import * as categoryService from "../../services/category-service";
 
 export default function NavCategories() {
+  const [categories, setCategories] = useState<Array<Category>>();
+
+  useEffect(() => {
+    categoryService.findAll().then((response) => {
+      setCategories(response.data);
+    });
+  }, []);
+
   return (
     <div className="bg-secondary container-category">
       <div className="container">
         <ul className="main-menu">
-          <li>
-            <NavLink to="/categories/1">Eletrônicos</NavLink>
-          </li>
-          <li>
-            <NavLink to="/categories/2">Vestuário</NavLink>
-          </li>
-          <li>
-            <NavLink to="/categories/3">Artigos para casa e decoração</NavLink>
-          </li>
-          <li>
-            <NavLink to="/categories/4">Artigos esportivos</NavLink>
-          </li>
-          <li>
-            <NavLink to="/categories/5">Livros</NavLink>
-          </li>
-          <li>
-            <NavLink to="/categories/6">Brinquedos e jogos</NavLink>
-          </li>
+          {categories?.map((category) => (
+            <li key={category.id}>
+              <NavLink to={`/categories/${category.id}`}>
+                {category.name}
+              </NavLink>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

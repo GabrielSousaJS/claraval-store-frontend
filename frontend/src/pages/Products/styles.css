@@ -1,0 +1,18 @@
+.products-container {
+    font-size: 1.125rem;
+}
+
+.product-title {
+    margin-bottom: 20px;
+}
+
+.product-title h1 {
+    font-size: 1em;
+    color: var(--text-color);
+}
+
+@media (min-width: 576px) {
+    .products-container {
+        font-size: 1.875rem;
+    }
+}
