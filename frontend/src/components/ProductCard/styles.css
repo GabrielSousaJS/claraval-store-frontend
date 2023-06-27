@@ -1,5 +1,6 @@
 .product-card {
   margin-bottom: 25px;
+  height: 300px;
 }
 
 .card-top-container {
@@ -10,7 +11,7 @@
 
 .card-top-container img {
   width: auto;
-  height: 200px;
+  height: 150px;
 }
 
 .card-bottom-container {

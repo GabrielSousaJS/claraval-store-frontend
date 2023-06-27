@@ -1,24 +1,31 @@
-import "./styles.css";
+import "../Products/styles.css";
 
-import { Product } from "types/product";
+
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Product } from "types/product";
 import * as productService from "../../services/product-service";
 import ProductCard from "components/ProductCard";
-import { Link } from "react-router-dom";
 
-export default function Products() {
+type UrlParams = {
+  categoryId: string;
+};
+
+export default function ProductsFilter() {
   const [products, setProducts] = useState<Array<Product>>();
 
+  const { categoryId } = useParams<UrlParams>();
+
   useEffect(() => {
-    productService.findAll('').then((response) => {
-      setProducts(response.data);
-    });
-  }, []);
+    productService
+      .findProdutsByCategory(Number(categoryId))
+      .then((response) => setProducts(response.data));
+  }, [categoryId]);
 
   return (
     <div className="container my-4 products-container">
       <div className="row product-title">
-        <h1>Catálogo de produtos</h1>
+        <h1>Filtro por categoria</h1>
       </div>
 
       <div className="row">
