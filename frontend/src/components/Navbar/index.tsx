@@ -2,18 +2,31 @@ import "./styles.css";
 
 import { Link } from "react-router-dom";
 import Logo from "../../assets/images/logo.png";
+import { ReactComponent as SearchIcon } from "../../assets/icons/search.svg";
+import { ReactComponent as CancelIcon } from '../../assets/icons/cancel.svg';
 import NavCategories from "components/NavCategories";
-import { useState } from "react";
-import SearchBar from "components/SearchBar";
 import { ReactComponent as LoginIcon } from "../../assets/icons/login.svg";
+import { useState } from "react";
 
-export default function Navbar() {
-  const [productName, setProductName] = useState("");
+type Props = {
+  onSearch: Function;
+};
 
-  // Aqui estaria o useEffect para atualizar a lista
+export default function Navbar({ onSearch }: Props) {
+  const [text, setText] = useState("");
 
-  function handleSearch(searchText: string) {
-    setProductName(searchText);
+  function handleChange(event: any) {
+    setText(event.target.value);
+  }
+
+  function handleSubmit(event: any) {
+    event.preventDefault();
+    onSearch(text);
+  }
+
+  function handleResetClick() {
+    setText("");
+    onSearch(text);
   }
 
   return (
@@ -26,10 +39,28 @@ export default function Navbar() {
             </Link>
           </div>
 
-          <SearchBar onSearch={handleSearch} />
+          <div className="search-bar">
+            <form onSubmit={handleSubmit}>
+              <input
+                value={text}
+                type="text"
+                placeholder="Nome do produto"
+                className="base-inputs"
+                onChange={handleChange}
+              />
+              <button type="submit">
+                <SearchIcon />
+              </button>
+              <button className={`text-danger ${text.length === 0 ? 'd-none' : 'd-block'}`} onClick={handleResetClick}>
+                <CancelIcon />
+              </button>
+            </form>
+          </div>
 
           <div className="login-icon">
-            <Link to='/login'><LoginIcon /></Link>
+            <Link to="/login">
+              <LoginIcon />
+            </Link>
           </div>
         </div>
       </nav>

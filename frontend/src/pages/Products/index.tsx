@@ -11,15 +11,21 @@ import Footer from "components/Footer";
 export default function Products() {
   const [products, setProducts] = useState<Array<Product>>();
 
+  const [productName, setProductName] = useState("");
+
   useEffect(() => {
-    productService.findAll("").then((response) => {
+    productService.findAll(productName).then((response) => {
       setProducts(response.data);
     });
-  }, []);
+  }, [productName]);
+
+  function handleSearch(searchText: string) {
+    setProductName(searchText);
+  }
 
   return (
     <>
-      <Navbar />
+      <Navbar onSearch={handleSearch} />
       <div className="container my-4 products-container">
         <div className="row product-title">
           <h1>Catálogo de produtos</h1>

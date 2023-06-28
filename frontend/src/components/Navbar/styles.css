@@ -11,6 +11,39 @@
   height: 75px;
 }
 
+.search-bar {
+  width: 500px;
+}
+
+.search-bar form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 15px 10px;
+  border-radius: 10px;
+  
+  background: #1E0848;
+}
+
+.search-bar input {
+  background: none;
+  border: none;
+  outline: none;
+
+  width: 95%;
+
+  font-size: 18px;
+
+  color: #fff;
+}
+
+.search-bar button {
+  background: none;
+  border: none;
+  padding: 0 10px;
+}
+
 .login-icon {
   color: #fff;
 }

@@ -23,9 +23,13 @@ export default function ProductsFilter() {
       .then((response) => setProducts(response.data));
   }, [categoryId]);
 
+  function teste() {
+    console.log("Passou por aqui");
+  }
+
   return (
     <>
-      <Navbar />
+      <Navbar onSearch={teste} />
       <div className="container my-4 products-container">
         <div className="row product-title">
           <h1>Filtro por categoria</h1>

@@ -1,11 +1,10 @@
-import axios, { AxiosRequestConfig } from "axios";
+import { AxiosRequestConfig } from "axios";
 import { requestBackend } from "utils/requests";
-import { BASE_URL } from "utils/system";
 
 export function findAll(productName: string) {
 
   const config: AxiosRequestConfig = {
-    url: `api/products?${productName}`
+    url: `api/products?name=${productName}`
   }
   return requestBackend(config);
 }
