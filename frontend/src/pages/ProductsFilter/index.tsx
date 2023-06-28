@@ -15,21 +15,23 @@ type UrlParams = {
 export default function ProductsFilter() {
   const [products, setProducts] = useState<Array<Product>>();
 
+  const [productName, setProductName] = useState("");
+
   const { categoryId } = useParams<UrlParams>();
 
   useEffect(() => {
     productService
-      .findProdutsByCategory(Number(categoryId))
+      .findProdutsByCategory(Number(categoryId), productName)
       .then((response) => setProducts(response.data));
-  }, [categoryId]);
+  }, [categoryId, productName]);
 
-  function teste() {
-    console.log("Passou por aqui");
+  function handleSearch(searchText: string) {
+    setProductName(searchText);
   }
 
   return (
     <>
-      <Navbar onSearch={teste} />
+      <Navbar onSearch={handleSearch} />
       <div className="container my-4 products-container">
         <div className="row product-title">
           <h1>Filtro por categoria</h1>
