@@ -1,0 +1,51 @@
+.img-container {
+    text-align: center;
+}
+
+.img-container img {
+    height: auto;
+    width: 200px;
+}
+
+.product-info {
+    margin-top: 20px;
+}
+
+.description-container {
+    display: grid;
+    justify-content: space-between;
+}
+
+.quantity-container {
+    margin-top: 20px;
+    text-align: end;
+}
+
+.quantity-container span {
+    font-size: 1.125rem;
+    display: inline-block;
+    padding: 0 20px;
+    width: 60px;
+}
+
+.quantity-container button {
+    border: none;
+    padding: 0;
+    width: 30px;
+}
+
+.buttons-modal {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+@media (max-width: 992px) {
+    .buttons-modal {
+        display: block;
+    }
+
+    .button-cancel {
+        margin-bottom: 10px;
+    }
+}

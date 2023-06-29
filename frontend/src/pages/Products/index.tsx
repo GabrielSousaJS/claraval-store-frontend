@@ -9,8 +9,25 @@ import Navbar from "components/Navbar";
 import Footer from "components/Footer";
 import ButtonPrimary from "components/ButtonPrimary";
 import ButtonInverse from "components/ButtonInverse";
+import ProductModal from "components/ProductModel";
 
 export default function Products() {
+
+  const productTest: Product = {
+    "id": 1,
+    "name": "iPhone 13 Pro",
+    "description": "O mais recente smartphone topo de gama da Apple com um impressionante ecrã Super Retina XDR, chip A15 Bionic, sistema de câmara Pro, conectividade 5G e iOS 15.",
+    "price": 6291.3,
+    "quantity": 17,
+    "imgUrl": "https://images-americanas.b2w.io/produtos/01/00/img/3919423/9/3919423949_1GG.jpg",
+    "categories": [
+        {
+            "id": 1,
+            "name": "Eletrônicos"
+        }
+    ]
+}
+
   const [products, setProducts] = useState<Array<Product>>();
 
   const [productName, setProductName] = useState("");
@@ -43,6 +60,8 @@ export default function Products() {
           ))}
         </div>
       </div>
+
+      <ProductModal product={productTest} />
       <Footer />
     </>
   );
