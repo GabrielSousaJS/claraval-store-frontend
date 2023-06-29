@@ -44,7 +44,6 @@ export default function ProductModal({ product, onModalClose }: Props) {
           <div className="product-info">
             <h3>{product?.name}</h3>
             <ProductPrice price={product ? product?.price : 0} />
-            <span>Estoque: {product?.quantity}</span>
           </div>
         </div>
         <div className="col-xl-6 description-container">
@@ -52,7 +51,12 @@ export default function ProductModal({ product, onModalClose }: Props) {
             <h4>Descrição do produto</h4>
             <p>{product?.description}</p>
           </div>
-          <div className="quantity-container">
+        </div>
+        <div className="row justify-content-between">
+          <div className="col-sm-6 align-self-center">
+            <span>Estoque: {product?.quantity}</span>
+          </div>
+          <div className="col-sm-6 quantity-container">
             <h6>Quatidade</h6>
             <button onClick={handleSubtract}>
               <SubButton />
@@ -63,7 +67,6 @@ export default function ProductModal({ product, onModalClose }: Props) {
             </button>
           </div>
         </div>
-
         <div className="buttons-modal">
           <div className="button-cancel" onClick={() => onModalClose()}>
             <ButtonInverse text={"cancelar"} />

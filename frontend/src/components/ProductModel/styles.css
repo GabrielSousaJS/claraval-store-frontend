@@ -1,51 +1,64 @@
 .img-container {
-    text-align: center;
+  text-align: center;
 }
 
 .img-container img {
-    height: auto;
-    width: 200px;
+  height: auto;
+  width: 200px;
 }
 
 .product-info {
-    margin-top: 20px;
-}
-
-.description-container {
-    display: grid;
-    justify-content: space-between;
+  margin-top: 20px;
 }
 
 .quantity-container {
-    margin-top: 20px;
-    text-align: end;
+  text-align: end;
 }
 
 .quantity-container span {
-    font-size: 1.125rem;
-    display: inline-block;
-    padding: 0 20px;
-    width: 60px;
+  font-size: 1.125rem;
+  display: inline-block;
+  padding: 0 20px;
+  width: 60px;
 }
 
 .quantity-container button {
-    border: none;
-    padding: 0;
-    width: 30px;
+  border: none;
+  padding: 0;
+  width: 30px;
 }
 
 .buttons-modal {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 
-@media (max-width: 992px) {
-    .buttons-modal {
-        display: block;
-    }
+@media (max-width: 576px) {
+  .quantity-container {
+    text-align: start;
+    margin-top: 10px;
+  }
+}
 
-    .button-cancel {
-        margin-bottom: 10px;
-    }
+@media (max-width: 768px) {
+  .description-container h4 {
+    font-size: 1.25rem;
+  }
+
+  .description-container p {
+    font-size: 0.9rem;
+  }
+
+  .buttons-modal {
+    display: block;
+  }
+
+  .button-cancel {
+    margin-bottom: 15px;
+  }
+
+  .img-container img {
+    width: 150px;
+  }
 }

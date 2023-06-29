@@ -1,27 +1,39 @@
 .btn-container {
-    display: flex;
+  display: flex;
 }
 
 .btn-container button {
-    border-radius: 10px 0 0 10px;
+  border-radius: 10px 0 0 10px;
 }
 
 .btn h6 {
-    font-size: 1rem;
-    text-transform: uppercase;
-    margin: 10px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  margin: 10px;
 }
 
 .btn-icon-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #ddd;
-    width: 30px;
-    border-radius: 0 10px 10px 0;
-    background-color: var(--tertiary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ddd;
+  width: 30px;
+  border-radius: 0 10px 10px 0;
+  background-color: var(--tertiary-color);
 }
 
 .btn-icon-container:hover {
-    cursor: pointer;
+  cursor: pointer;
+}
+
+@media (max-width: 576px) {
+  .btn h6 {
+    margin: 5px;
+  }
+}
+
+@media (max-width: 390px) {
+  .btn h6 {
+    font-size: 0.9rem;
+  }
 }

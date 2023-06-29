@@ -1,12 +1,12 @@
-import './styles.css';
+import "./styles.css";
 
-import {ReactComponent as ArrowIcon} from '../../assets/icons/arrow.svg';
+import { ReactComponent as ArrowIcon } from "../../assets/icons/arrow.svg";
 
 type Props = {
-    text: string;
-}
+  text: string;
+};
 
-export default function ButtonPrimary({text}: Props) {
+export default function ButtonPrimary({ text }: Props) {
   return (
     <div className="btn-container">
       <button className="btn btn-secondary btn-icon">
