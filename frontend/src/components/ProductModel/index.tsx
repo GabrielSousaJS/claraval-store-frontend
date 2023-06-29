@@ -9,10 +9,11 @@ import { ReactComponent as SubButton } from "../../assets/icons/subIcon.svg";
 import { useEffect, useState } from "react";
 
 type Props = {
-  product: Product;
+  product?: Product;
+  onModalClose: Function;
 };
 
-export default function ProductModal({ product }: Props) {
+export default function ProductModal({ product, onModalClose }: Props) {
   const [quantityProduct, setQuantityProduct] = useState<number>(1);
 
   useEffect(() => {
@@ -20,7 +21,9 @@ export default function ProductModal({ product }: Props) {
   }, [quantityProduct]);
 
   function handleAdd() {
-    if (quantityProduct < product.quantity) {
+    let stock = product ? product.quantity : 0;
+
+    if (quantityProduct < stock) {
       setQuantityProduct(quantityProduct + 1);
     }
   }
@@ -32,22 +35,22 @@ export default function ProductModal({ product }: Props) {
   }
 
   return (
-    <div className="modal-background">
-      <div className="row modal-box">
+    <div className="modal-background" onClick={() => onModalClose()}>
+      <div className="row modal-box" onClick={(e) => e.stopPropagation()}>
         <div className="col-xl-6">
           <div className="img-container">
-            <img src={product.imgUrl} alt={product.name} />
+            <img src={product?.imgUrl} alt={product?.name} />
           </div>
           <div className="product-info">
-            <h3>{product.name}</h3>
-            <ProductPrice price={product.price} />
-            <span>Estoque: {product.quantity}</span>
+            <h3>{product?.name}</h3>
+            <ProductPrice price={product ? product?.price : 0} />
+            <span>Estoque: {product?.quantity}</span>
           </div>
         </div>
         <div className="col-xl-6 description-container">
           <div>
             <h4>Descrição do produto</h4>
-            <p>{product.description}</p>
+            <p>{product?.description}</p>
           </div>
           <div className="quantity-container">
             <h6>Quatidade</h6>
@@ -62,7 +65,7 @@ export default function ProductModal({ product }: Props) {
         </div>
 
         <div className="buttons-modal">
-          <div className="button-cancel">
+          <div className="button-cancel" onClick={() => onModalClose()}>
             <ButtonInverse text={"cancelar"} />
           </div>
           <ButtonPrimary text={"adicionar ao carrinho"} />

@@ -1,12 +1,13 @@
 import "../Products/styles.css";
 
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Product } from "types/product";
 import * as productService from "../../services/product-service";
 import ProductCard from "components/ProductCard";
 import Footer from "components/Footer";
 import Navbar from "components/Navbar";
+import ProductModal from "components/ProductModel";
 
 type UrlParams = {
   categoryId: string;
@@ -14,6 +15,8 @@ type UrlParams = {
 
 export default function ProductsFilter() {
   const [products, setProducts] = useState<Array<Product>>();
+
+  const [modalProduct, setModalProdut] = useState<any>();
 
   const [productName, setProductName] = useState("");
 
@@ -29,6 +32,10 @@ export default function ProductsFilter() {
     setProductName(searchText);
   }
 
+  function handleModalClose() {
+    setModalProdut(null);
+  }
+
   return (
     <>
       <Navbar onSearch={handleSearch} />
@@ -39,14 +46,22 @@ export default function ProductsFilter() {
 
         <div className="row">
           {products?.map((product) => (
-            <div className="col-sm-6 col-lg-4 col-xl-3" key={product.id}>
-              <Link to={`/products/${product.id}`}>
+            <div
+              className="col-sm-6 col-lg-4 col-xl-3"
+              key={product.id}
+              onClick={() => setModalProdut(product)}
+            >
+              <div className="product-item">
                 <ProductCard product={product} />
-              </Link>
+              </div>
             </div>
           ))}
         </div>
       </div>
+
+      {modalProduct && (
+        <ProductModal product={modalProduct} onModalClose={handleModalClose} />
+      )}
       <Footer />
     </>
   );

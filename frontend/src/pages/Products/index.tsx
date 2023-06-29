@@ -4,33 +4,16 @@ import { Product } from "types/product";
 import { useEffect, useState } from "react";
 import * as productService from "../../services/product-service";
 import ProductCard from "components/ProductCard";
-import { Link } from "react-router-dom";
 import Navbar from "components/Navbar";
 import Footer from "components/Footer";
-import ButtonPrimary from "components/ButtonPrimary";
-import ButtonInverse from "components/ButtonInverse";
 import ProductModal from "components/ProductModel";
 
 export default function Products() {
-
-  const productTest: Product = {
-    "id": 1,
-    "name": "iPhone 13 Pro",
-    "description": "O mais recente smartphone topo de gama da Apple com um impressionante ecrã Super Retina XDR, chip A15 Bionic, sistema de câmara Pro, conectividade 5G e iOS 15.",
-    "price": 6291.3,
-    "quantity": 17,
-    "imgUrl": "https://images-americanas.b2w.io/produtos/01/00/img/3919423/9/3919423949_1GG.jpg",
-    "categories": [
-        {
-            "id": 1,
-            "name": "Eletrônicos"
-        }
-    ]
-}
-
   const [products, setProducts] = useState<Array<Product>>();
 
   const [productName, setProductName] = useState("");
+
+  const [modalProduct, setModalProduct] = useState<any>();
 
   useEffect(() => {
     productService.findAll(productName).then((response) => {
@@ -40,6 +23,10 @@ export default function Products() {
 
   function handleSearch(searchText: string) {
     setProductName(searchText);
+  }
+
+  function handleModalClose() {
+    setModalProduct(null);
   }
 
   return (
@@ -52,16 +39,23 @@ export default function Products() {
 
         <div className="row">
           {products?.map((product) => (
-            <div className="col-sm-6 col-lg-4 col-xl-3" key={product.id}>
-              <Link to={`/products/${product.id}`}>
+            <div
+              className="col-sm-6 col-lg-4 col-xl-3"
+              key={product.id}
+              onClick={() => {
+                setModalProduct(product);
+              }}
+            >
+              <div className="product-item">
                 <ProductCard product={product} />
-              </Link>
+              </div>
             </div>
           ))}
         </div>
       </div>
-
-      <ProductModal product={productTest} />
+      {modalProduct && (
+        <ProductModal product={modalProduct} onModalClose={handleModalClose} />
+      )}
       <Footer />
     </>
   );

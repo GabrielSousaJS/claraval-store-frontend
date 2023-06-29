@@ -11,6 +11,10 @@
     color: var(--text-color);
 }
 
+.product-item:hover {
+    cursor: pointer;
+}
+
 @media (min-width: 576px) {
     .products-container {
         font-size: 1.875rem;
