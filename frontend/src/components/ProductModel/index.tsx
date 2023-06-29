@@ -14,6 +14,8 @@ type Props = {
 };
 
 export default function ProductModal({ product, onModalClose }: Props) {
+  let stock = product ? product.quantity : 0;
+
   const [quantityProduct, setQuantityProduct] = useState<number>(1);
 
   useEffect(() => {
@@ -21,8 +23,6 @@ export default function ProductModal({ product, onModalClose }: Props) {
   }, [quantityProduct]);
 
   function handleAdd() {
-    let stock = product ? product.quantity : 0;
-
     if (quantityProduct < stock) {
       setQuantityProduct(quantityProduct + 1);
     }
@@ -56,22 +56,34 @@ export default function ProductModal({ product, onModalClose }: Props) {
           <div className="col-sm-6 align-self-center">
             <span>Estoque: {product?.quantity}</span>
           </div>
-          <div className="col-sm-6 quantity-container">
-            <h6>Quatidade</h6>
-            <button onClick={handleSubtract}>
-              <SubButton />
-            </button>
-            <span>{quantityProduct}</span>
-            <button onClick={handleAdd}>
-              <AddButton />
-            </button>
-          </div>
+
+          {stock > 0 ? (
+            <div className="col-sm-6 quantity-container">
+              <h6>Quatidade</h6>
+              <button onClick={handleSubtract}>
+                <SubButton />
+              </button>
+              <span>{quantityProduct}</span>
+              <button onClick={handleAdd}>
+                <AddButton />
+              </button>
+            </div>
+          ) : (
+            <div></div>
+          )}
         </div>
         <div className="buttons-modal">
           <div className="button-cancel" onClick={() => onModalClose()}>
             <ButtonInverse text={"cancelar"} />
           </div>
-          <ButtonPrimary text={"adicionar ao carrinho"} />
+
+          {stock > 0 ? (
+            <div>
+              <ButtonPrimary text={"adicionar ao carrinho"} />
+            </div>
+          ) : (
+            <div className="quantity-warning">Produto não disponível</div>
+          )}
         </div>
       </div>
     </div>

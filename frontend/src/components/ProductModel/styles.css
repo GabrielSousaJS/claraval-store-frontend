@@ -34,6 +34,10 @@
   margin-top: 20px;
 }
 
+.quantity-warning {
+  font-size: 1.25rem;
+}
+
 @media (max-width: 576px) {
   .quantity-container {
     text-align: start;
