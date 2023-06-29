@@ -5,6 +5,7 @@
   --text-color: #263238;
   --primary-color: #13cffc;
   --secondary-color: #500f6a;
+  --tertiary-color: #1e0848;
   --danger-color: #c51414;
 }
 
@@ -39,4 +40,23 @@ a:hover {
 .form-select-container {
   padding: unset;
   height: unset;
+}
+
+.modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-box {
+  background-color: #eee;
+  border-radius: 0.625rem;
+  padding: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

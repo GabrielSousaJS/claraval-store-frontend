@@ -7,6 +7,8 @@ import ProductCard from "components/ProductCard";
 import { Link } from "react-router-dom";
 import Navbar from "components/Navbar";
 import Footer from "components/Footer";
+import ButtonPrimary from "components/ButtonPrimary";
+import ButtonInverse from "components/ButtonInverse";
 
 export default function Products() {
   const [products, setProducts] = useState<Array<Product>>();

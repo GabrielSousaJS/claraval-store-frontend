@@ -1,0 +1,7 @@
+.btn-inverse-container {
+    display: flex;
+}
+
+.btn-inverse-container button {
+    border-radius: 10px;
+}
