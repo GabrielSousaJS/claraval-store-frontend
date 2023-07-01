@@ -74,6 +74,19 @@ a:hover {
   color: var(--text-color);
 }
 
+.claraval-form-control[data-dirty='true'][data-invalid='true'] {
+  border: 1px solid #e61515;
+}
+
+.claraval-form-control[data-dirty='true'][data-invalid='true'] ~ div {
+  display: unset;
+}
+
+.form-error {
+  color: #e61515;
+  display: none;
+}
+
 @media (max-width: 1200px) {
   .modal-box {
     width: 80%;
@@ -84,5 +97,11 @@ a:hover {
   .modal-box {
     padding: 10px;
     width: 70%;
+  }
+}
+
+@media (max-width: 576px) {
+  .form-error {
+    font-size: 0.825rem;
   }
 }

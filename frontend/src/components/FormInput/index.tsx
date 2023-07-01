@@ -16,7 +16,7 @@ export default function FormInput(props: any) {
       onBlur={handleBlur}
       {...inputsProps}
       data-invalid={invalid}
-      data-diry={dirty}
+      data-dirty={dirty}
     />
   );
 }

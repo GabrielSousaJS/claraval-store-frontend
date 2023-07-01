@@ -4,6 +4,7 @@ import { useState } from "react";
 import Logo from "../../assets/images/logo.png";
 import { Link } from "react-router-dom";
 import FormInput from "components/FormInput";
+import ptBR from "date-fns/locale/pt-BR";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -28,10 +29,18 @@ export default function SingUp() {
       validation: function (value: string) {
         return /^.{3,80}$/.test(value);
       },
-      message: "Informe um nome 3 a 80 caracteres",
+      message: "Informe um nome entre 3 a 80 caracteres",
     },
     birthDate: {
       value: "",
+      id: "birthDate",
+      name: "birthDate",
+      type: "text",
+      placeholderText: "Data de nascimento",
+      validation: function (value: any) {
+        return;
+      },
+      message: "Campo inválido",
     },
     email: {
       value: "",
@@ -51,9 +60,9 @@ export default function SingUp() {
       type: "password",
       placeholder: "Senha",
       validation: function (value: string) {
-        return /^\S.*[a-zA-Z\s]*$/g.test(value);
+        return /^.{8,}$/.test(value);
       },
-      message: "A senha não pode ser vazia",
+      message: "Campo inválido. No mínimo 8 caracteres",
     },
     address: {
       value: {},
@@ -70,7 +79,7 @@ export default function SingUp() {
       validation: function (value: string) {
         return /^\S.*[a-zA-Z\s]*$/g.test(value);
       },
-      message: "O endereço não pode ser vazio",
+      message: "Campo inválido",
     },
     cep: {
       value: "",
@@ -131,11 +140,6 @@ export default function SingUp() {
 
   const [selectedDate, setSelectedDate] = useState<any>(null);
 
-  const dateFormat = (date: any) => {
-    let formatISO8601 = new Date(date).toISOString();
-    return formatISO8601;
-  };
-
   function handleTurnDiryUser(name: string) {
     setFormUserData(dirtyAndValidate(formUserData, name));
   }
@@ -170,84 +174,135 @@ export default function SingUp() {
   }
 
   return (
-    <div className="container base-card modal-box">
-      <Link to="/">
-        <div className=" img-container">
-          <img src={Logo} alt="Logo da empresa" />
-        </div>
-      </Link>
+    <div className="container-form-singup">
+      <div className="container base-card">
+        <Link to="/">
+          <div className=" img-container">
+            <img src={Logo} alt="Logo da empresa" />
+          </div>
+        </Link>
 
-      <form onSubmit={handleSubmit}>
-        <div className="row">
-          <FormInput
-            {...formUserData.name}
-            className="form-control base-input"
-            onTurnDiry={handleTurnDiryUser}
-            onChange={handleInputUserChange}
-          />
+        <form onSubmit={handleSubmit}>
+          <div className="row container-form">
+            <div className="col-md-8 container-form-input">
+              <FormInput
+                {...formUserData.name}
+                className="form-control base-input claraval-form-control"
+                onTurnDiry={handleTurnDiryUser}
+                onChange={handleInputUserChange}
+              />
+              <div className="form-error">{formUserData.name.message}</div>
+            </div>
 
-          <ReactDatePicker
-            selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
-            className="form-control base-input"
-            id="birthDate"
-            placeholderText="Data de nascimento"
-            dateFormat={"dd/MM/yyyy"}
-          />
+            <div className="col-md-4 container-form-input">
+              <ReactDatePicker
+                {...formUserData.birthDate}
+                selected={selectedDate}
+                id="birthDate"
+                locale={ptBR}
+                className="form-control base-input claraval-form-control"
+                onChange={(date: any) => {
+                  let formatISO8601 = new Date(date).toISOString;
+                  const newFormData = updateAndValidate(
+                    formUserData,
+                    "birthDate",
+                    formatISO8601
+                  );
+                  setSelectedDate(date);
+                  setFormUserData(newFormData);
+                }}
+                dateFormat={"dd/MM/yyyy"}
+                onBlur={handleTurnDiryUser}
+              />
+              <div className="form-error">{formUserData.birthDate.message}</div>
+            </div>
 
-          <FormInput
-            {...formUserData.email}
-            className="form-control base-input"
-            onTurnDiry={handleTurnDiryUser}
-            onChange={handleInputUserChange}
-          />
+            <div className="col-sm-12 container-form-input">
+              <FormInput
+                {...formUserData.email}
+                className="form-control base-input claraval-form-control"
+                onTurnDiry={handleTurnDiryUser}
+                onChange={handleInputUserChange}
+              />
+              <div className="form-error">{formUserData.email.message}</div>
+            </div>
 
-          <FormInput
-            {...formUserData.password}
-            className="form-control base-input"
-            onTurnDiry={handleTurnDiryUser}
-            onChange={handleInputUserChange}
-          />
+            <div className="col-sm-12 container-form-input">
+              <FormInput
+                {...formUserData.password}
+                className="form-control base-input claraval-form-control"
+                onTurnDiry={handleTurnDiryUser}
+                onChange={handleInputUserChange}
+              />
+              <div className="form-error">{formUserData.password.message}</div>
+            </div>
 
-          <FormInput
-            {...formAddressData.publicPlace}
-            className="form-control base-input"
-            onTurnDiry={handleTurnDirtyAddress}
-            onChange={handleInputAdressChange}
-          />
+            <div className="col-md-9 container-form-input">
+              <FormInput
+                {...formAddressData.publicPlace}
+                className="form-control base-input claraval-form-control"
+                onTurnDiry={handleTurnDirtyAddress}
+                onChange={handleInputAdressChange}
+              />
+              <div className="form-error">
+                {formAddressData.publicPlace.message}
+              </div>
+            </div>
 
-          <FormInput
-            {...formAddressData.number}
-            className="form-control base-input"
-            onTurnDiry={handleTurnDirtyAddress}
-            onChange={handleInputAdressChange}
-          />
+            <div className="col-md-3 container-form-input claraval-form-control">
+              <FormInput
+                {...formAddressData.number}
+                className="form-control base-input"
+                onTurnDiry={handleTurnDirtyAddress}
+                onChange={handleInputAdressChange}
+              />
+              <div className="form-error">{formAddressData.number.message}</div>
+            </div>
+            <div className="col-md-6 container-form-input">
+              <FormInput
+                {...formAddressData.city}
+                className="form-control base-input claraval-form-control"
+                onTurnDiry={handleTurnDirtyAddress}
+                onChange={handleInputAdressChange}
+              />
+              <div className="form-error">{formAddressData.city.message}</div>
+            </div>
 
-          <FormInput
-            {...formAddressData.city}
-            className="form-control base-input"
-            onTurnDiry={handleTurnDirtyAddress}
-            onChange={handleInputAdressChange}
-          />
+            <div className="col-md-6 container-form-input">
+              <FormInput
+                {...formAddressData.state}
+                className="form-control base-input claraval-form-control"
+                onTurnDiry={handleTurnDirtyAddress}
+                onChange={handleInputAdressChange}
+              />
+              <div className="form-error">{formAddressData.state.message}</div>
+            </div>
 
-          <FormInput
-            {...formAddressData.state}
-            className="form-control base-input"
-            onTurnDiry={handleTurnDirtyAddress}
-            onChange={handleInputAdressChange}
-          />
+            <div className="col-sm-6 container-form-input">
+              <FormInput
+                {...formAddressData.country}
+                className="form-control base-input claraval-form-control"
+                onTurnDiry={handleTurnDirtyAddress}
+                onChange={handleInputAdressChange}
+              />
+              <div className="form-error">
+                {formAddressData.country.message}
+              </div>
+            </div>
 
-          <FormInput
-            {...formAddressData.country}
-            className="form-control base-input"
-            onTurnDiry={handleTurnDirtyAddress}
-            onChange={handleInputAdressChange}
-          />
-
-          <ButtonInverse text={"cancelar"} />
-          <ButtonPrimary text={"cadastrar"} />
-        </div>
-      </form>
+            <div className="button-form">
+              <div className="button-form-cancel">
+                <Link to="/">
+                  <ButtonInverse text={"cancelar"} />
+                </Link>
+              </div>
+              <div className="button-form-confirm">
+                <ButtonPrimary text={"cadastrar"} />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

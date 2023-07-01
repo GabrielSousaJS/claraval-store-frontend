@@ -1,0 +1,45 @@
+.container-form-singup {
+    align-items: center;
+    margin-top: 3vh;
+}
+
+.img-container {
+    padding-top: 20px;
+}
+
+.container-form {
+    padding: 15px 0;
+}
+
+.base-input::placeholder {
+    color: var(--text-color);
+}
+
+.container-form-input {
+    margin-bottom: 15px;
+}
+
+.button-form {
+    display: flex;
+    justify-content: space-between;
+}
+
+@media (max-width: 576px) {
+    .base-card {
+        width: 90%;
+    }
+
+    .base-input {
+        font-size: 0.825rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .button-form {
+        display: unset;
+    }
+
+    .button-form-cancel {
+        margin-bottom: 15px;
+    }
+}
