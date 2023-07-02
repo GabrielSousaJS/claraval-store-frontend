@@ -74,15 +74,27 @@ export function validateAll(inputs: any) {
 }
 
 export function dirtyAndValidateAll(inputs: any) {
-    return validateAll(toDirtyAll(inputs));
+  return validateAll(toDirtyAll(inputs));
 }
 
 export function hasAnyInvalid(inputs: any) {
-    for (let name in inputs) {
-        if (inputs[name].dirty === 'true' && inputs[name].invalid === "true") {
-            return true;
-        }
+  for (let name in inputs) {
+    if (inputs[name].dirty === "true" && inputs[name].invalid === "true") {
+      return true;
     }
+  }
 
-    return false;
+  return false;
+}
+
+export function setBackendErrors(inputs: any, errors: any[]) {
+  const newInputs = { ...inputs };
+
+  errors.forEach((item) => {
+    newInputs[item.fieldError].message = item.message;
+    newInputs[item.fieldError].dirty = "true";
+    newInputs[item.fieldError].invalid = "true";
+  });
+
+  return newInputs;
 }

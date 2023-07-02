@@ -12,6 +12,7 @@ import {
   dirtyAndValidate,
   dirtyAndValidateAll,
   hasAnyInvalid,
+  setBackendErrors,
   toValues,
   updateAndValidate,
 } from "utils/forms";
@@ -70,7 +71,7 @@ export default function SingUp() {
       type: "text",
       placeholder: "Logradouro",
       validation: function (value: string) {
-        return /^\S.{2}[a-zA-Z\s]*$/g.test(value);
+        return /^\S.{2}[a-zA-Z\s\d\W]*$/g.test(value);
       },
       message: "Campo inválido",
     },
@@ -185,7 +186,10 @@ export default function SingUp() {
     const formDataUserValidated = dirtyAndValidateAll(formUserData);
     const formDataAddressValidated = dirtyAndValidateAll(formAddressData);
 
-    if (hasAnyInvalid(formDataUserValidated) && hasAnyInvalid(formDataAddressValidated)) {
+    if (
+      hasAnyInvalid(formDataUserValidated) &&
+      hasAnyInvalid(formDataAddressValidated)
+    ) {
       setFormUserData(formDataUserValidated);
       setFormAddressData(formDataAddressValidated);
       console.log("passou auqi");
@@ -199,24 +203,32 @@ export default function SingUp() {
     requestBody.address = userAddress;
 
     const config: AxiosRequestConfig = {
-      method: 'POST',
-      url: 'api/users',
+      method: "POST",
+      url: "api/users",
       data: requestBody,
-    }
+    };
 
-    return requestBackend(config).then(() => {
-      navigate('/login');
-    })
+    return requestBackend(config)
+      .then(() => {
+        navigate("/login");
+      })
+      .catch((error) => {
+        const newInputs = setBackendErrors(
+          formDataUserValidated,
+          error.response.data.errors
+        );
+        setFormUserData(newInputs);
+      });
   }
 
   return (
     <div className="container-form-singup">
       <div className="container base-card">
-        <Link to="/">
-          <div className=" img-container">
+        <div className=" img-container">
+          <Link to="/">
             <img src={Logo} alt="Logo da empresa" />
-          </div>
-        </Link>
+          </Link>
+        </div>
 
         <form onSubmit={handleSubmit}>
           <div className="row container-form">
