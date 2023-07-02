@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 export default function NavbarAdmin() {
   return (
-    <div className="admin-nav-container">
+    <nav className="admin-nav-container">
       <ul className="admin-nav-ul">
         <li>
           <NavLink to="/admin/products" className="admin-nav-item">
@@ -27,6 +27,6 @@ export default function NavbarAdmin() {
           </NavLink>
         </li>
       </ul>
-    </div>
+    </nav>
   );
 }

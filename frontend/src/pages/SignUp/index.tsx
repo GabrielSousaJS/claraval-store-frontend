@@ -7,6 +7,7 @@ import FormInput from "components/FormInput";
 import ptBR from "date-fns/locale/pt-BR";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import * as userService from "../../services/user-service";
 
 import {
   dirtyAndValidate,
@@ -202,13 +203,7 @@ export default function SingUp() {
     requestBody.birthDate = formatDate(selectedDate);
     requestBody.address = userAddress;
 
-    const config: AxiosRequestConfig = {
-      method: "POST",
-      url: "api/users",
-      data: requestBody,
-    };
-
-    return requestBackend(config)
+    return userService.insertUser(requestBody)
       .then(() => {
         navigate("/login");
       })

@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import './styles.css';
 import NavbarAdmin from './NavbarAdmin';
 import Navbar from 'components/Navbar';
+import Footer from 'components/Footer';
 
 export default function Admin() {
 
@@ -18,6 +19,7 @@ export default function Admin() {
                 <Outlet />
             </div>
         </div>
+        <Footer />
         </>
     )
 }
