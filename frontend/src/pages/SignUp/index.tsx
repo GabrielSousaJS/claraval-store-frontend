@@ -2,7 +2,7 @@ import "./styles.css";
 
 import { useState } from "react";
 import Logo from "../../assets/images/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormInput from "components/FormInput";
 import ptBR from "date-fns/locale/pt-BR";
 import ReactDatePicker from "react-datepicker";
@@ -16,7 +16,8 @@ import {
   updateAndValidate,
 } from "utils/forms";
 import ButtonInverse from "components/ButtonInverse";
-import ButtonPrimary from "components/ButtonPrimary";
+import { AxiosRequestConfig } from "axios";
+import { requestBackend } from "utils/requests";
 
 export default function SingUp() {
   const [formUserData, setFormUserData] = useState<any>({
@@ -33,14 +34,6 @@ export default function SingUp() {
     },
     birthDate: {
       value: "",
-      id: "birthDate",
-      name: "birthDate",
-      type: "text",
-      placeholderText: "Data de nascimento",
-      validation: function (value: any) {
-        return;
-      },
-      message: "Campo inválido",
     },
     email: {
       value: "",
@@ -69,7 +62,7 @@ export default function SingUp() {
     },
   });
 
-  const [formAddressData, setAddressData] = useState<any>({
+  const [formAddressData, setFormAddressData] = useState<any>({
     publicPlace: {
       value: "",
       id: "publicPlace",
@@ -77,7 +70,7 @@ export default function SingUp() {
       type: "text",
       placeholder: "Logradouro",
       validation: function (value: string) {
-        return /^\S.*[a-zA-Z\s]*$/g.test(value);
+        return /^\S.{2}[a-zA-Z\s]*$/g.test(value);
       },
       message: "Campo inválido",
     },
@@ -96,12 +89,12 @@ export default function SingUp() {
       value: "",
       id: "number",
       name: "number",
-      type: "number",
+      type: "text",
       placeholder: "Número",
-      validation: function (value: number) {
-        return value > 0;
+      validation: function (value: string) {
+        return /^[1-9][0-9]*$/.test(value);
       },
-      message: "Número inválido",
+      message: "Campo inválido",
     },
     city: {
       value: "",
@@ -138,14 +131,41 @@ export default function SingUp() {
     },
   });
 
+  const navigate = useNavigate();
+
   const [selectedDate, setSelectedDate] = useState<any>(null);
+
+  const [errorDateMessage, setErrorMessage] = useState<string>("");
+
+  function formatDate(date: any) {
+    let formatISO8601 = new Date(date).toISOString();
+
+    return formatISO8601;
+  }
+
+  const handleDateChange = (date: any) => {
+    const currentDate = new Date();
+    const eighteenYearsAgo = new Date(
+      currentDate.getFullYear() - 18,
+      currentDate.getMonth(),
+      currentDate.getDate()
+    );
+
+    if (date <= eighteenYearsAgo) {
+      setSelectedDate(date);
+      setErrorMessage("");
+    } else {
+      setErrorMessage("Idade mínima é de 18 anos.");
+      setSelectedDate(null);
+    }
+  };
 
   function handleTurnDiryUser(name: string) {
     setFormUserData(dirtyAndValidate(formUserData, name));
   }
 
   function handleTurnDirtyAddress(name: string) {
-    setAddressData(dirtyAndValidate(formAddressData, name));
+    setFormAddressData(dirtyAndValidate(formAddressData, name));
   }
 
   function handleInputUserChange(event: any) {
@@ -155,22 +175,38 @@ export default function SingUp() {
   }
 
   function handleInputAdressChange(event: any) {
-    setAddressData(
+    setFormAddressData(
       updateAndValidate(formAddressData, event.target.name, event.target.value)
     );
   }
 
   function handleSubmit(event: any) {
     event.preventDefault();
-    const formDataValidated = dirtyAndValidateAll(formUserData);
-    if (hasAnyInvalid(formDataValidated)) {
-      setFormUserData(formDataValidated);
+    const formDataUserValidated = dirtyAndValidateAll(formUserData);
+    const formDataAddressValidated = dirtyAndValidateAll(formAddressData);
+
+    if (hasAnyInvalid(formDataUserValidated) && hasAnyInvalid(formDataAddressValidated)) {
+      setFormUserData(formDataUserValidated);
+      setFormAddressData(formDataAddressValidated);
+      console.log("passou auqi");
       return;
     }
 
+    const userAddress = toValues(formAddressData);
     const requestBody = toValues(formUserData);
 
-    console.log(requestBody);
+    requestBody.birthDate = formatDate(selectedDate);
+    requestBody.address = userAddress;
+
+    const config: AxiosRequestConfig = {
+      method: 'POST',
+      url: 'api/users',
+      data: requestBody,
+    }
+
+    return requestBackend(config).then(() => {
+      navigate('/login');
+    })
   }
 
   return (
@@ -196,25 +232,19 @@ export default function SingUp() {
 
             <div className="col-md-4 container-form-input">
               <ReactDatePicker
-                {...formUserData.birthDate}
                 selected={selectedDate}
                 id="birthDate"
                 locale={ptBR}
                 className="form-control base-input claraval-form-control"
-                onChange={(date: any) => {
-                  let formatISO8601 = new Date(date).toISOString;
-                  const newFormData = updateAndValidate(
-                    formUserData,
-                    "birthDate",
-                    formatISO8601
-                  );
-                  setSelectedDate(date);
-                  setFormUserData(newFormData);
-                }}
+                placeholderText="Data de nascimento"
+                onChange={handleDateChange}
                 dateFormat={"dd/MM/yyyy"}
-                onBlur={handleTurnDiryUser}
               />
-              <div className="form-error">{formUserData.birthDate.message}</div>
+              {!selectedDate ? (
+                <div className="date-picker-error">{errorDateMessage}</div>
+              ) : (
+                <div></div>
+              )}
             </div>
 
             <div className="col-sm-12 container-form-input">
@@ -252,13 +282,13 @@ export default function SingUp() {
             <div className="col-md-3 container-form-input claraval-form-control">
               <FormInput
                 {...formAddressData.number}
-                className="form-control base-input"
+                className="form-control base-input claraval-form-control"
                 onTurnDiry={handleTurnDirtyAddress}
                 onChange={handleInputAdressChange}
               />
               <div className="form-error">{formAddressData.number.message}</div>
             </div>
-            <div className="col-md-6 container-form-input">
+            <div className="col-md-4 container-form-input">
               <FormInput
                 {...formAddressData.city}
                 className="form-control base-input claraval-form-control"
@@ -268,7 +298,7 @@ export default function SingUp() {
               <div className="form-error">{formAddressData.city.message}</div>
             </div>
 
-            <div className="col-md-6 container-form-input">
+            <div className="col-md-4 container-form-input">
               <FormInput
                 {...formAddressData.state}
                 className="form-control base-input claraval-form-control"
@@ -276,6 +306,16 @@ export default function SingUp() {
                 onChange={handleInputAdressChange}
               />
               <div className="form-error">{formAddressData.state.message}</div>
+            </div>
+
+            <div className="col-md-4 container-form-input">
+              <FormInput
+                {...formAddressData.cep}
+                className="form-control base-input claraval-form-control"
+                onTurnDiry={handleTurnDirtyAddress}
+                onChange={handleInputAdressChange}
+              />
+              <div className="form-error">{formAddressData.cep.message}</div>
             </div>
 
             <div className="col-sm-6 container-form-input">
@@ -297,7 +337,9 @@ export default function SingUp() {
                 </Link>
               </div>
               <div className="button-form-confirm">
-                <ButtonPrimary text={"cadastrar"} />
+                <button className="btn btn-secondary btn-singup">
+                  cadastrar
+                </button>
               </div>
             </div>
           </div>

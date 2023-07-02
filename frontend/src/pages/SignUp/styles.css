@@ -1,6 +1,6 @@
 .container-form-singup {
     align-items: center;
-    margin-top: 3vh;
+    margin: 10vh 0;
 }
 
 .img-container {
@@ -19,9 +19,21 @@
     margin-bottom: 15px;
 }
 
+.date-picker-error {
+    color: #e61515;
+}
+
 .button-form {
     display: flex;
     justify-content: space-between;
+}
+
+.btn-singup {
+    text-transform: uppercase;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 16px 22px;
 }
 
 @media (max-width: 576px) {
@@ -31,6 +43,10 @@
 
     .base-input {
         font-size: 0.825rem;
+    }
+
+    .btn-singup {
+        padding: 11px 17px;
     }
 }
 
@@ -43,3 +59,10 @@
         margin-bottom: 15px;
     }
 }
+
+@media (max-width: 390px) {
+    .btn-singup {
+      font-size: 0.9rem;
+    }
+  }
+  
