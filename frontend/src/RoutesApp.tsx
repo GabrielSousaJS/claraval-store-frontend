@@ -1,4 +1,5 @@
 import Admin from "pages/Admin";
+import CategoriesAdmin from "pages/Admin/Categories";
 import ProductsAdmin from "pages/Admin/Products";
 import FormProducts from "pages/Admin/Products/FormProducts";
 import List from "pages/Admin/Products/List";
@@ -21,12 +22,13 @@ export default function RoutesApp() {
           <Route path="/admin" element={<Navigate to="products" />} />
           <Route path="/admin/products" element={<ProductsAdmin />}>
             <Route path="/admin/products" element={<List />} />
-            <Route path="/admin/products/:productId" element={<FormProducts />} />
+            <Route
+              path="/admin/products/:productId"
+              element={<FormProducts />}
+            />
           </Route>
-          <Route
-            path="/admin/categories"
-            element={<h1>Página de categorias</h1>}
-          />
+          <Route path="/admin/categories" element={<CategoriesAdmin />} />
+          <Route path="/admin/categories/:categoryId" element={<h1>Página de formulário para categorias</h1>} />
           <Route path="/admin/orders" element={<h1>Página de pedidos</h1>} />
           <Route path="/admin/users" element={<h1>Página de usuários</h1>} />
         </Route>

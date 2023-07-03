@@ -1,0 +1,48 @@
+.category-crud-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.category-crud-name {
+  color: var(--secondary-color);
+}
+
+.category-crud-card-buttons-container {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.category-crud-card-button {
+  width: 150px;
+}
+
+.category-crud-card-button-remove {
+  margin-top: 20px;
+}
+
+@media (max-width: 576px) {
+  .category-crud-card {
+    flex-direction: column;
+  }
+
+  .category-crud-name h5 {
+    font-size: 1.2rem;
+  }
+
+  .category-crud-card-buttons-container {
+    flex-direction: row;
+  }
+
+  .category-crud-card-button {
+    width: 100px;
+  }
+
+  .category-crud-card-button-remove {
+    margin-top: 0;
+    margin-right: 5px;
+  }
+}

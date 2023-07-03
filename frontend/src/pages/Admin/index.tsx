@@ -1,5 +1,6 @@
-import { Outlet } from "react-router-dom";
 import "./styles.css";
+
+import { Outlet } from "react-router-dom";
 import NavbarAdmin from "./NavbarAdmin";
 import Navbar from "components/Navbar";
 import Footer from "components/Footer";

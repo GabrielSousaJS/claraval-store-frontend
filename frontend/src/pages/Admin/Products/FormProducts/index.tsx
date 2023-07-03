@@ -5,7 +5,12 @@ import { useEffect, useState } from "react";
 import { Category } from "types/category";
 import * as categoryService from "../../../../services/category-service";
 import * as productService from "../../../../services/product-service";
-import { dirtyAndValidate, toValues, updateAll, updateAndValidate } from "utils/forms";
+import {
+  dirtyAndValidate,
+  toValues,
+  updateAll,
+  updateAndValidate,
+} from "utils/forms";
 import FormInput from "components/FormInput";
 import FormSelect from "components/FormSelect";
 import { selectStyles } from "utils/select";
@@ -44,7 +49,7 @@ export default function FormProducts() {
       validation: function (value: any) {
         return Number(value) > 0;
       },
-      message: 'Informe um preço positivo'
+      message: "Informe um preço positivo",
     },
     quantity: {
       value: "",

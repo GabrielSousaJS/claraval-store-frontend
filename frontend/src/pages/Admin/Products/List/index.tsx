@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
 import "./styles.css";
+
+import { Link } from "react-router-dom";
 import ButtonPrimary from "components/ButtonPrimary";
 import { Product } from "types/product";
 import { useEffect, useState } from "react";

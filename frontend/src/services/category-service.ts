@@ -8,3 +8,21 @@ export function findAll() {
 
   return requestBackend(config);
 }
+
+export function findById(id: number) {
+  const config: AxiosRequestConfig = {
+    url: `api/categories/${id}`,
+  };
+
+  return requestBackend(config);
+}
+
+export function deleteById(id: number) {
+  const config: AxiosRequestConfig = {
+    method: "DELETE",
+    url: `api/categories/${id}`,
+    withCredentials: true,
+  };
+
+  return requestBackend(config);
+}
