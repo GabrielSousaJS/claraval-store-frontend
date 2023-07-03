@@ -20,11 +20,13 @@ export default function List() {
   return (
     <div className="product-card-container">
       <div className="product-crud-bar-container">
+        <div>
+          <h4>Listagem de produtos</h4>
+        </div>
         <Link to={"/admin/products/create"}>
           <ButtonPrimary text={"Adicionar"} />
         </Link>
       </div>
-
       <div className="row">
         {products?.map((product) => (
           <div className="col-sm-6 col-md-12" key={product.id}>

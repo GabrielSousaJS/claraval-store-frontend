@@ -1,68 +1,67 @@
 .container-form-singup {
-    align-items: center;
-    margin: 10vh 0;
+  align-items: center;
+  margin: 10vh 0;
 }
 
 .img-container {
-    padding-top: 20px;
+  padding-top: 20px;
 }
 
 .container-form {
-    padding: 15px 0;
+  padding: 15px 0;
 }
 
 .base-input::placeholder {
-    color: var(--text-color);
+  color: var(--text-color);
 }
 
 .container-form-input {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .date-picker-error {
-    color: #e61515;
+  color: #e61515;
 }
 
 .button-form {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .btn-singup {
-    text-transform: uppercase;
-    border-radius: 10px;
-    font-weight: 700;
-    font-size: 1rem;
-    padding: 16px 22px;
+  text-transform: uppercase;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 16px 22px;
 }
 
 @media (max-width: 576px) {
-    .base-card {
-        width: 90%;
-    }
+  .base-card {
+    width: 90%;
+  }
 
-    .base-input {
-        font-size: 0.825rem;
-    }
+  .base-input {
+    font-size: 0.825rem;
+  }
 
-    .btn-singup {
-        padding: 11px 17px;
-    }
+  .btn-singup {
+    padding: 11px 17px;
+  }
 }
 
 @media (max-width: 767px) {
-    .button-form {
-        display: unset;
-    }
+  .button-form {
+    display: unset;
+  }
 
-    .button-form-cancel {
-        margin-bottom: 15px;
-    }
+  .button-form-cancel {
+    margin-bottom: 15px;
+  }
 }
 
 @media (max-width: 390px) {
-    .btn-singup {
-      font-size: 0.9rem;
-    }
+  .btn-singup {
+    font-size: 0.9rem;
   }
-  
+}

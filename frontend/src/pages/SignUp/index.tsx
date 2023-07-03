@@ -203,7 +203,8 @@ export default function SingUp() {
     requestBody.birthDate = formatDate(selectedDate);
     requestBody.address = userAddress;
 
-    return userService.insertUser(requestBody)
+    return userService
+      .insertUser(requestBody)
       .then(() => {
         navigate("/login");
       })

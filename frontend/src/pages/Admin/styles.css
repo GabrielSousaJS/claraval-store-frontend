@@ -1,17 +1,17 @@
 .admin-container {
-    display: flex;
+  display: flex;
 }
 
 .admin-content {
-    flex: 1;
+  flex: 1;
 }
 
 @media (max-width: 992px) {
-    .admin-container {
-        flex-direction: column;
-    }
+  .admin-container {
+    flex-direction: column;
+  }
 
-    .admin-content {
-        padding: 20px;
-    }
+  .admin-content {
+    padding: 10px;
+  }
 }

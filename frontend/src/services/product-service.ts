@@ -20,7 +20,7 @@ export function deleteProductById(id: number) {
   const config: AxiosRequestConfig = {
     method: "DELETE",
     url: `api/products/${id}`,
-    // Adicionar credenciais
+    withCredentials: true,
   };
 
   return requestBackend(config);

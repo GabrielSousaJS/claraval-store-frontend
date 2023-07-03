@@ -5,22 +5,22 @@ import { requestBackend } from "utils/requests";
 import { CLIENT_ID, CLIENT_SECRET } from "utils/system";
 
 export function loginRequest(loginData: Credentials) {
-    const headers = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: 'Basic ' + window.btoa(CLIENT_ID + ":" + CLIENT_SECRET)
-    }
+  const headers = {
+    "Content-Type": "application/x-www-form-urlencoded",
+    Authorization: "Basic " + window.btoa(CLIENT_ID + ":" + CLIENT_SECRET),
+  };
 
-    const data = qs.stringify({
-        ...loginData,
-        grant_type: 'password',
-    });
+  const data = qs.stringify({
+    ...loginData,
+    grant_type: "password",
+  });
 
-    const config: AxiosRequestConfig = {
-        method: 'POST',
-        url: 'oauth/token',
-        data,
-        headers,
-    }
+  const config: AxiosRequestConfig = {
+    method: "POST",
+    url: "oauth/token",
+    data,
+    headers,
+  };
 
-    requestBackend(config);
+  requestBackend(config);
 }

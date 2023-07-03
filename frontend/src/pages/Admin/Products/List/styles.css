@@ -1,0 +1,27 @@
+.product-card-container {
+  padding: 12px;
+}
+
+.product-crud-bar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.product-crud-bar-container h4 {
+  color: var(--text-color);
+  padding-left: 20px;
+}
+
+@media (max-width: 576px) {
+  .product-crud-bar-container {
+    flex-direction: column;
+    justify-content: unset;
+    align-items: unset;
+  }
+
+  .product-crud-bar-container h4 {
+    padding: 0;
+    margin-bottom: 14px;
+  }
+}
