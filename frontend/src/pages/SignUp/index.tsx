@@ -91,10 +91,11 @@ export default function SingUp() {
       value: "",
       id: "number",
       name: "number",
-      type: "text",
+      type: "number",
       placeholder: "Número",
-      validation: function (value: string) {
-        return /^[1-9][0-9]*$/.test(value);
+      validation: function (value: any) {
+        const numberAddress = Number(value).toFixed(0);
+        return Number(numberAddress) > 0;
       },
       message: "Campo inválido",
     },
@@ -232,7 +233,7 @@ export default function SingUp() {
               <FormInput
                 {...formUserData.name}
                 className="form-control base-input claraval-form-control"
-                onTurnDiry={handleTurnDiryUser}
+                onTurnDirty={handleTurnDiryUser}
                 onChange={handleInputUserChange}
               />
               <div className="form-error">{formUserData.name.message}</div>
@@ -259,7 +260,7 @@ export default function SingUp() {
               <FormInput
                 {...formUserData.email}
                 className="form-control base-input claraval-form-control"
-                onTurnDiry={handleTurnDiryUser}
+                onTurnDirty={handleTurnDiryUser}
                 onChange={handleInputUserChange}
               />
               <div className="form-error">{formUserData.email.message}</div>
@@ -269,7 +270,7 @@ export default function SingUp() {
               <FormInput
                 {...formUserData.password}
                 className="form-control base-input claraval-form-control"
-                onTurnDiry={handleTurnDiryUser}
+                onTurnDirty={handleTurnDiryUser}
                 onChange={handleInputUserChange}
               />
               <div className="form-error">{formUserData.password.message}</div>
@@ -279,7 +280,7 @@ export default function SingUp() {
               <FormInput
                 {...formAddressData.publicPlace}
                 className="form-control base-input claraval-form-control"
-                onTurnDiry={handleTurnDirtyAddress}
+                onTurnDirty={handleTurnDirtyAddress}
                 onChange={handleInputAdressChange}
               />
               <div className="form-error">
@@ -291,7 +292,7 @@ export default function SingUp() {
               <FormInput
                 {...formAddressData.number}
                 className="form-control base-input claraval-form-control"
-                onTurnDiry={handleTurnDirtyAddress}
+                onTurnDirty={handleTurnDirtyAddress}
                 onChange={handleInputAdressChange}
               />
               <div className="form-error">{formAddressData.number.message}</div>
@@ -300,7 +301,7 @@ export default function SingUp() {
               <FormInput
                 {...formAddressData.city}
                 className="form-control base-input claraval-form-control"
-                onTurnDiry={handleTurnDirtyAddress}
+                onTurnDirty={handleTurnDirtyAddress}
                 onChange={handleInputAdressChange}
               />
               <div className="form-error">{formAddressData.city.message}</div>
@@ -310,7 +311,7 @@ export default function SingUp() {
               <FormInput
                 {...formAddressData.state}
                 className="form-control base-input claraval-form-control"
-                onTurnDiry={handleTurnDirtyAddress}
+                onTurnDirty={handleTurnDirtyAddress}
                 onChange={handleInputAdressChange}
               />
               <div className="form-error">{formAddressData.state.message}</div>
@@ -320,7 +321,7 @@ export default function SingUp() {
               <FormInput
                 {...formAddressData.cep}
                 className="form-control base-input claraval-form-control"
-                onTurnDiry={handleTurnDirtyAddress}
+                onTurnDirty={handleTurnDirtyAddress}
                 onChange={handleInputAdressChange}
               />
               <div className="form-error">{formAddressData.cep.message}</div>
@@ -330,7 +331,7 @@ export default function SingUp() {
               <FormInput
                 {...formAddressData.country}
                 className="form-control base-input claraval-form-control"
-                onTurnDiry={handleTurnDirtyAddress}
+                onTurnDirty={handleTurnDirtyAddress}
                 onChange={handleInputAdressChange}
               />
               <div className="form-error">

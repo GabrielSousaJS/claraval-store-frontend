@@ -70,21 +70,30 @@ a:hover {
   height: 40px;
 }
 
+.base-input::placeholder {
+  color: #9e9e9e !important;
+}
+
 .base-input:focus {
   color: var(--text-color);
 }
 
-.claraval-form-control[data-dirty='true'][data-invalid='true'] {
+.claraval-form-control[data-dirty="true"][data-invalid="true"] {
   border: 1px solid #e61515;
 }
 
-.claraval-form-control[data-dirty='true'][data-invalid='true'] ~ div {
+.claraval-form-control[data-dirty="true"][data-invalid="true"] ~ div {
   display: unset;
 }
 
 .form-error {
   color: #e61515;
   display: none;
+}
+
+.form-select-container {
+  padding: unset;
+  height: unset;
 }
 
 @media (max-width: 1200px) {
