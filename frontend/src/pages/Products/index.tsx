@@ -37,7 +37,7 @@ export default function Products() {
           <h1>Catálogo de produtos</h1>
         </div>
 
-        <div className="row">
+        <div className="row position-relative">
           {products?.map((product) => (
             <div
               className="col-sm-6 col-lg-4 col-xl-3"

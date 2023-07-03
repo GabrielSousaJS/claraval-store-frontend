@@ -1,5 +1,9 @@
 .products-container {
     font-size: 1.125rem;
+    min-height: 100vh;
+    min-height: calc(100vh - 182px);
+    position: relative;
+    width: 100%;
 }
 
 .product-title {
@@ -13,6 +17,10 @@
 
 .product-item:hover {
     cursor: pointer;
+}
+
+footer {
+    bottom: unset;
 }
 
 @media (min-width: 576px) {
