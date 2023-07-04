@@ -45,10 +45,12 @@
 }
 
 .login-logout-icon {
+  display: flex;
+  gap: 20px;
   color: #fff;
 }
 
-.login-logout-icon:hover {
+.admin-button:hover, .logout-button:hover, .cart-nav-button:hover {
   color: var(--primary-color);
 }
 
@@ -69,7 +71,7 @@
 }
 
 @media (max-width: 767px) {
-  .login-icon {
+  .login-logout-icon {
     order: 2;
   }
 

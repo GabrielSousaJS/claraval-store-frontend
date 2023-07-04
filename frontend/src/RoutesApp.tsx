@@ -1,3 +1,4 @@
+import PrivateRoute from "components/PrivateRoute";
 import Admin from "pages/Admin";
 import CategoriesAdmin from "pages/Admin/Categories";
 import FormCategory from "pages/Admin/Categories/FormCategory";
@@ -20,7 +21,14 @@ export default function RoutesApp() {
         <Route path="/login" element={<Login />} />
         <Route path="/singup" element={<SingUp />} />
 
-        <Route path="/admin" element={<Admin />}>
+        <Route
+          path="/admin"
+          element={
+            <PrivateRoute roles={["ROLE_ADMIN"]}>
+              <Admin />
+            </PrivateRoute>
+          }
+        >
           <Route path="/admin" element={<Navigate to="products" />} />
           <Route path="/admin/products" element={<ProductsAdmin />}>
             <Route path="/admin/products" element={<List />} />

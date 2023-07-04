@@ -11,6 +11,8 @@ import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "AuthContext";
 import { getTokenData, isAuthenticated } from "utils/auth";
 import { removeAuthData } from "utils/storage";
+import { ReactComponent as AdminIcon } from "../../assets/icons/adminIcon.svg";
+import { ReactComponent as CartIcon } from "../../assets/icons/cartIcon.svg";
 
 type Props = {
   onSearch: Function;
@@ -60,6 +62,12 @@ export default function Navbar({ onSearch }: Props) {
     navigate("/");
   }
 
+  function hasAdmin() {
+    return authContextData.tokenData?.authorities.find(
+      (role) => role === "ROLE_ADMIN"
+    );
+  }
+
   return (
     <header>
       <nav className="navbar navbar-expand-md bg-secondary main-nav">
@@ -95,9 +103,26 @@ export default function Navbar({ onSearch }: Props) {
 
           <div className="login-logout-icon">
             {authContextData.authenticated ? (
-              <a href="#logout" onClick={handleClick}>
-                <LogoutIcon />
-              </a>
+              <>
+                {" "}
+                {hasAdmin() && (
+                  <div className="admin-button">
+                    <Link to="/admin">
+                      <AdminIcon />
+                    </Link>
+                  </div>
+                )}
+                <div className="cart-nav-button">
+                  <Link to="/orders">
+                    <CartIcon />
+                  </Link>
+                </div>
+                <div className="logout-button">
+                  <a href="#logout" onClick={handleClick}>
+                    <LogoutIcon />
+                  </a>
+                </div>
+              </>
             ) : (
               <Link to="/login">
                 <LoginIcon />
