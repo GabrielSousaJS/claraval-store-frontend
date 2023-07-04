@@ -44,11 +44,11 @@
   padding: 0 10px;
 }
 
-.login-icon {
+.login-logout-icon {
   color: #fff;
 }
 
-.login-icon:hover {
+.login-logout-icon:hover {
   color: var(--primary-color);
 }
 

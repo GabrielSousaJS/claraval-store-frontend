@@ -1,18 +1,39 @@
 import "./styles.css";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../assets/images/logo.png";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search.svg";
-import { ReactComponent as CancelIcon } from '../../assets/icons/cancel.svg';
+import { ReactComponent as CancelIcon } from "../../assets/icons/cancel.svg";
 import NavCategories from "components/NavCategories";
 import { ReactComponent as LoginIcon } from "../../assets/icons/login.svg";
-import { useState } from "react";
+import { ReactComponent as LogoutIcon } from "../../assets/icons/logout.svg";
+import { useState, useContext, useEffect } from "react";
+import { AuthContext } from "AuthContext";
+import { getTokenData, isAuthenticated } from "utils/auth";
+import { removeAuthData } from "utils/storage";
 
 type Props = {
   onSearch: Function;
 };
 
 export default function Navbar({ onSearch }: Props) {
+  const { authContextData, setAuthContextData } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated()) {
+      setAuthContextData({
+        authenticated: true,
+        tokenData: getTokenData(),
+      });
+    } else {
+      setAuthContextData({
+        authenticated: false,
+      });
+    }
+  }, [setAuthContextData]);
+
   const [text, setText] = useState("");
 
   function handleChange(event: any) {
@@ -27,6 +48,16 @@ export default function Navbar({ onSearch }: Props) {
   function handleResetClick() {
     setText("");
     onSearch(text);
+  }
+
+  function handleClick(event: React.MouseEvent<HTMLAnchorElement>) {
+    event.preventDefault();
+    removeAuthData();
+    setAuthContextData({
+      authenticated: false,
+    });
+
+    navigate("/");
   }
 
   return (
@@ -51,16 +82,27 @@ export default function Navbar({ onSearch }: Props) {
               <button type="submit">
                 <SearchIcon />
               </button>
-              <button className={`text-danger ${text.length === 0 ? 'd-none' : 'd-block'}`} onClick={handleResetClick}>
+              <button
+                className={`text-danger ${
+                  text.length === 0 ? "d-none" : "d-block"
+                }`}
+                onClick={handleResetClick}
+              >
                 <CancelIcon />
               </button>
             </form>
           </div>
 
-          <div className="login-icon">
-            <Link to="/login">
-              <LoginIcon />
-            </Link>
+          <div className="login-logout-icon">
+            {authContextData.authenticated ? (
+              <a href="#logout" onClick={handleClick}>
+                <LogoutIcon />
+              </a>
+            ) : (
+              <Link to="/login">
+                <LoginIcon />
+              </Link>
+            )}
           </div>
         </div>
       </nav>

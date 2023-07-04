@@ -1,18 +1,22 @@
 import "./styles.css";
 
 import Logo from "../../assets/images/logo.png";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
 import FormInput from "components/FormInput";
 import { dirtyAndValidate, toValues, updateAndValidate } from "utils/forms";
-import ButtonPrimary from "components/ButtonPrimary";
+import * as authService from "../../services/auth-service";
+import { saveAuthData } from "utils/storage";
+import { AuthContext } from "AuthContext";
+import { getTokenData, hasAnyRoles } from "utils/auth";
+import { Role } from "types/role";
 
 export default function Login() {
   const [formData, setFormData] = useState<any>({
-    email: {
+    username: {
       value: "",
-      id: "email",
-      name: "email",
+      id: "username",
+      name: "username",
       type: "text",
       validation: function (value: string) {
         return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value);
@@ -31,6 +35,12 @@ export default function Login() {
     },
   });
 
+  const { authContextData, setAuthContextData } = useContext(AuthContext);
+
+  const [hasError, setHasError] = useState(false);
+
+  const navigate = useNavigate();
+
   function handleInputChange(event: any) {
     setFormData(
       updateAndValidate(formData, event.target.name, event.target.value)
@@ -43,10 +53,26 @@ export default function Login() {
 
   function handleSubmit(event: any) {
     event.preventDefault();
-
     const requestBody = toValues(formData);
+    authService
+      .loginRequest(requestBody)
+      .then((response) => {
+        saveAuthData(response.data);
+        setHasError(false);
+        setAuthContextData({
+          authenticated: true,
+          tokenData: getTokenData(),
+        });
 
-    console.log(requestBody);
+        if (getTokenData()?.authorities.find((role) => role === "ROLE_ADMIN")) {
+          navigate("/admin");
+        } else {
+          navigate("/orders");
+        }
+      })
+      .catch((error) => {
+        setHasError(true);
+      });
   }
 
   return (
@@ -64,12 +90,17 @@ export default function Login() {
             <div className="input-login">
               <label>e-mail</label>
               <FormInput
-                {...formData.email}
+                {...formData.username}
                 className="form-control base-input claraval-form-control"
                 onTurnDirty={handleTurnDirty}
                 onChange={handleInputChange}
               />
-              <div className="form-error">{formData.email.message}</div>
+              <div className="form-error">{formData.username.message}</div>
+              {hasError && (
+                <div className="form-error">
+                  Erro ao tentar efetuar o login. Verifique os dados.
+                </div>
+              )}
             </div>
 
             <div className="input-login">

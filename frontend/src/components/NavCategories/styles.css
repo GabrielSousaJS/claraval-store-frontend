@@ -4,15 +4,15 @@
   padding-bottom: 8px;
 }
 
-.main-menu a:hover {
+.main-menu-category a:hover {
   color: var(--primary-color);
 }
 
-.main-menu a.active {
+.main-menu-category a.active {
   color: var(--primary-color);
 }
 
-.main-menu {
+.main-menu-category {
   display: flex;
   flex-wrap: wrap;
   font-weight: 700;
@@ -20,17 +20,17 @@
   text-transform: uppercase;
 }
 
-.main-menu ul,
-.main-menu li {
+.main-menu-category ul,
+.main-menu-category li {
   list-style: none;
 }
 
-.main-menu a {
+.main-menu-category a {
   flex: 1;
 }
 
 @media (max-width: 1200px) {
- .main-menu {
+ .main-menu-category {
   justify-content: center;
   gap: 30px;
  }

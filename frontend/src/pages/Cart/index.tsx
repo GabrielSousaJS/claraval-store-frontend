@@ -4,7 +4,6 @@ import Navbar from "components/Navbar";
 import Footer from "components/Footer";
 import CartItem from "./CartItem";
 import * as formatters from "../../utils/formatters";
-import ButtonPrimary from "components/ButtonPrimary";
 
 export default function Cart() {
   const items = {
@@ -43,7 +42,10 @@ export default function Cart() {
             <div className="cart-total-price">
               <div className="cart-total-info">
                 <h3>Total</h3>
-                <p>R$ {formatters.formatPrice(items.product.price * items.quantity)}</p>
+                <p>
+                  R${" "}
+                  {formatters.formatPrice(items.product.price * items.quantity)}
+                </p>
               </div>
             </div>
 

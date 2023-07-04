@@ -22,5 +22,5 @@ export function loginRequest(loginData: Credentials) {
     headers,
   };
 
-  requestBackend(config);
+  return requestBackend(config);
 }

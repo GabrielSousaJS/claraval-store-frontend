@@ -17,7 +17,7 @@ export default function NavCategories() {
   return (
     <div className="bg-secondary container-category">
       <div className="container">
-        <ul className="main-menu">
+        <ul className="main-menu-category">
           {categories?.map((category) => (
             <li key={category.id} className="item-category">
               <NavLink to={`/category/${category.id}`}>
