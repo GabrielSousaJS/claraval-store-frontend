@@ -1,0 +1,30 @@
+.cart-card-container {
+    min-height: 100vh;
+    min-height: calc(100vh - 182px);
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    color: var(--text-color);
+}
+
+.cart-total-price {
+    padding: 20px;
+}
+
+.cart-total-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.cart-total-info p {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.cart-button {
+    font-size: 1.5rem;
+    width: 100%;
+    font-weight: 700;
+}

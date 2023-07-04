@@ -32,9 +32,9 @@ export default function Navbar({ onSearch }: Props) {
   return (
     <header>
       <nav className="navbar navbar-expand-md bg-secondary main-nav">
-        <div className="container d-flex justify-content-between">
+        <div className="container d-flex justify-content-between container-nav-bar">
           <div className="container-logo">
-            <Link to="/" className="nav-logo">
+            <Link to="/">
               <img src={Logo} alt="Logo da empresa" />
             </Link>
           </div>

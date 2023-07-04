@@ -14,9 +14,9 @@
 
 .main-menu {
   display: flex;
+  flex-wrap: wrap;
   font-weight: 700;
   justify-content: space-between;
-
   text-transform: uppercase;
 }
 
@@ -27,4 +27,11 @@
 
 .main-menu a {
   flex: 1;
+}
+
+@media (max-width: 1200px) {
+ .main-menu {
+  justify-content: center;
+  gap: 30px;
+ }
 }

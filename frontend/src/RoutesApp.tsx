@@ -4,6 +4,7 @@ import FormCategory from "pages/Admin/Categories/FormCategory";
 import ProductsAdmin from "pages/Admin/Products";
 import FormProducts from "pages/Admin/Products/FormProducts";
 import List from "pages/Admin/Products/List";
+import Cart from "pages/Cart";
 import Login from "pages/Login";
 import Products from "pages/Products";
 import ProductsFilter from "pages/ProductsFilter";
@@ -36,6 +37,7 @@ export default function RoutesApp() {
           <Route path="/admin/orders" element={<h1>Página de pedidos</h1>} />
           <Route path="/admin/users" element={<h1>Página de usuários</h1>} />
         </Route>
+        <Route path="/orders" element={<Cart />} />
       </Routes>
     </BrowserRouter>
   );

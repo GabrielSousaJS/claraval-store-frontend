@@ -1,0 +1,48 @@
+.logo-img {
+  margin-left: 50px;
+  max-width: 100%;
+  display: block;
+  width: 200px;
+  padding: 20px;
+}
+
+.login-container {
+  width: 500px;
+}
+
+.input-login {
+  padding-bottom: 30px;
+}
+
+.button-login {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.login-text {
+  text-align: center;
+}
+
+.login-link-singup {
+  color: gray;
+  text-decoration: underline;
+}
+
+@media (max-width: 800px) {
+  .logo-img {
+    text-align: left;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .login-container {
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 425px) {
+  .login-container {
+    max-width: 80%;
+  }
+}

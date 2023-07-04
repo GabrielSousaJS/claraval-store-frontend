@@ -19,7 +19,7 @@ export default function NavCategories() {
       <div className="container">
         <ul className="main-menu">
           {categories?.map((category) => (
-            <li key={category.id}>
+            <li key={category.id} className="item-category">
               <NavLink to={`/category/${category.id}`}>
                 {category.name}
               </NavLink>
