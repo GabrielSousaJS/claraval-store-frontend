@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   color: var(--text-color);
+  margin-bottom: 20px;
 }
 
 .cart-item-img {
@@ -35,6 +36,10 @@
 
 .cart-item-delete {
   color: var(--danger-color);
+}
+
+.cart-item-delete:hover {
+  cursor: pointer;
 }
 
 @media (max-width: 1480px) {

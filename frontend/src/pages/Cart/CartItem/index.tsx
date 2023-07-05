@@ -1,23 +1,39 @@
 import "./styles.css";
 
 import ProductPrice from "components/ProductPrice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ReactComponent as AddButton } from "../../../assets/icons/addIcon.svg";
 import { ReactComponent as SubButton } from "../../../assets/icons/subIcon.svg";
 import { ReactComponent as DeleteIcon } from "../../../assets/icons/deleteIcon.svg";
+import { OrderItem } from "types/order-items";
+import * as orderService from "../../../services/order-service";
 
 type Props = {
-  item: any;
+  orderId?: number;
+  item: OrderItem;
+  onChange: Function;
 };
 
-export default function CartItem({ item }: Props) {
+export default function CartItem({ orderId, item, onChange }: Props) {
   let quantityProduct: number = item.product.quantity;
 
   const [itemQuantity, setItemQuantity] = useState<number>(item.quantity);
 
+  useEffect(() => {
+    updateItemQuantity();
+  }, [itemQuantity]);
+
+  async function updateItemQuantity() {
+    if (orderId) {
+      await orderService.updateItem(orderId, item.product.id, itemQuantity);
+      onChange();
+    }
+  }
+
   function handleAddItem() {
     if (itemQuantity < quantityProduct) {
       setItemQuantity(itemQuantity + 1);
+      onChange();
     }
   }
 
@@ -27,10 +43,16 @@ export default function CartItem({ item }: Props) {
     }
   }
 
+  function getSubTotal(): number {
+    return item.product.price * itemQuantity;
+  }
+
   function handleDelete() {
-    console.log(item);
-    item = null;
-    console.log(item);
+    if (orderId) {
+      orderService.deleteItem(orderId, item.product.id).then(() => {
+        onChange();
+      });
+    }
   }
 
   return (
@@ -53,9 +75,9 @@ export default function CartItem({ item }: Props) {
           </button>
         </div>
         <div className="cart-item-price">
-          <ProductPrice price={item.product.price * itemQuantity} />
+          <ProductPrice price={getSubTotal()} />
         </div>
-        <div className="cart-item-delete" onClick={handleDelete}>
+        <div className="cart-item-delete" onClick={() => handleDelete()}>
           <DeleteIcon />
         </div>
       </div>

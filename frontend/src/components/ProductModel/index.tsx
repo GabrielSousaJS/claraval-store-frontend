@@ -7,6 +7,12 @@ import ButtonPrimary from "components/ButtonPrimary";
 import { ReactComponent as AddButton } from "../../assets/icons/addIcon.svg";
 import { ReactComponent as SubButton } from "../../assets/icons/subIcon.svg";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { isAuthenticated } from "utils/auth";
+import * as orderService from "../../services/order-service";
+import { Order } from "types/order";
+import { OrderItem } from "types/order-items";
+import { getAuthData } from "utils/storage";
 
 type Props = {
   product?: Product;
@@ -18,9 +24,21 @@ export default function ProductModal({ product, onModalClose }: Props) {
 
   const [quantityProduct, setQuantityProduct] = useState<number>(1);
 
+  const [orders, setOrders] = useState<Array<Order>>();
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     setQuantityProduct(quantityProduct);
   }, [quantityProduct]);
+
+  useEffect(() => {
+    if (isAuthenticated()) {
+      orderService.getOrdersFromClient().then((response) => {
+        setOrders(response.data);
+      });
+    }
+  });
 
   function handleAdd() {
     if (quantityProduct < stock) {
@@ -33,6 +51,59 @@ export default function ProductModal({ product, onModalClose }: Props) {
       setQuantityProduct(quantityProduct - 1);
     }
   }
+
+  function handleAddItem() {
+    if (isAuthenticated()) {
+      if (hasOpenOrder()) {
+        let openOrder = hasOpenOrder();
+
+        if (product) {
+          let item: OrderItem = {
+            orderId: openOrder?.id,
+            product,
+            quantity: quantityProduct,
+          };
+
+          if (openOrder?.id) {
+            orderService.addItemToOrder(openOrder?.id, item);
+          }
+
+          navigate("/orders");
+        }
+      } else {
+        if (product) {
+          let item: OrderItem = {
+            product,
+            quantity: quantityProduct,
+          };
+
+          let items: Array<OrderItem> = [];
+          items.push(item);
+
+          let order: Order = {
+            moment: String(new Date().toISOString()),
+            orderStatus: "WAITING_PAYMENT",
+            clientId: getAuthData().userId,
+            items,
+          };
+
+          orderService.saveOrder(order).then((response) => {
+            console.log(response.data);
+          });
+        }
+      }
+    } else {
+      navigate("/login");
+    }
+  }
+
+  const hasOpenOrder = () => {
+    let openOrder = orders?.find(
+      (order) => order.orderStatus === "WAITING_PAYMENT"
+    );
+
+    return openOrder;
+  };
 
   return (
     <div className="modal-background" onClick={() => onModalClose()}>
@@ -78,7 +149,7 @@ export default function ProductModal({ product, onModalClose }: Props) {
           </div>
 
           {stock > 0 ? (
-            <div>
+            <div onClick={handleAddItem}>
               <ButtonPrimary text={"adicionar ao carrinho"} />
             </div>
           ) : (
