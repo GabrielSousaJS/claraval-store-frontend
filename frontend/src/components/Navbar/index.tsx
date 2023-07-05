@@ -1,6 +1,6 @@
 import "./styles.css";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Logo from "../../assets/images/logo.png";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search.svg";
 import { ReactComponent as CancelIcon } from "../../assets/icons/cancel.svg";
@@ -22,6 +22,17 @@ export default function Navbar({ onSearch }: Props) {
   const { authContextData, setAuthContextData } = useContext(AuthContext);
 
   const navigate = useNavigate();
+
+  const location = useLocation();
+  const currentPage = location.pathname;
+
+  function hasSearchBar() {
+    if (currentPage === "/" || currentPage.startsWith("/category")) {
+      return "search-bar";
+    } else {
+      return "d-none";
+    }
+  }
 
   useEffect(() => {
     if (isAuthenticated()) {
@@ -78,7 +89,7 @@ export default function Navbar({ onSearch }: Props) {
             </Link>
           </div>
 
-          <div className="search-bar">
+          <div className={`${hasSearchBar()}`}>
             <form onSubmit={handleSubmit}>
               <input
                 value={text}

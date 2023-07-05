@@ -1,7 +1,5 @@
 import "./styles.css";
 
-import {ReactComponent as CancelIcon} from '../../assets/icons/cancel.svg';
-
 type Props = {
     text: string;
 }

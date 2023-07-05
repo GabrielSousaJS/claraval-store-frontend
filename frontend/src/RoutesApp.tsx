@@ -45,7 +45,14 @@ export default function RoutesApp() {
           <Route path="/admin/orders" element={<h1>Página de pedidos</h1>} />
           <Route path="/admin/users" element={<h1>Página de usuários</h1>} />
         </Route>
-        <Route path="/orders" element={<Cart />} />
+        <Route
+          path="/orders"
+          element={
+            <PrivateRoute roles={["ROLE_CLIENT"]}>
+              <Cart />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

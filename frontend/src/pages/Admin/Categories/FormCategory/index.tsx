@@ -42,7 +42,7 @@ export default function FormCategory() {
         setFormData(updateAll(formData, response.data));
       });
     }
-  }, [categoryId]);
+  });
 
   function handleInputChange(event: any) {
     setFormData(

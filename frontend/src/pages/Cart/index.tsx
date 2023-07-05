@@ -23,11 +23,11 @@ export default function Cart() {
     subTotal: 16389.4,
   };
 
-  function handleSearch() {}
+  function ignore() {}
 
   return (
     <>
-      <Navbar onSearch={handleSearch} />
+      <Navbar onSearch={ignore} />
       <div className="cart-card-container">
         <h1>Meu carrinho</h1>
 

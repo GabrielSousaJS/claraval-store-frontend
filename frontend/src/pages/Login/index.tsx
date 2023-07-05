@@ -8,8 +8,7 @@ import { dirtyAndValidate, toValues, updateAndValidate } from "utils/forms";
 import * as authService from "../../services/auth-service";
 import { saveAuthData } from "utils/storage";
 import { AuthContext } from "AuthContext";
-import { getTokenData, hasAnyRoles } from "utils/auth";
-import { Role } from "types/role";
+import { getTokenData } from "utils/auth";
 
 export default function Login() {
   const [formData, setFormData] = useState<any>({

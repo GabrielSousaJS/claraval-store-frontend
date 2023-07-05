@@ -18,8 +18,6 @@ import {
   updateAndValidate,
 } from "utils/forms";
 import ButtonInverse from "components/ButtonInverse";
-import { AxiosRequestConfig } from "axios";
-import { requestBackend } from "utils/requests";
 
 export default function SingUp() {
   const [formUserData, setFormUserData] = useState<any>({

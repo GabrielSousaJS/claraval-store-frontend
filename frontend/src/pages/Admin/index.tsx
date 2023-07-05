@@ -6,11 +6,11 @@ import Navbar from "components/Navbar";
 import Footer from "components/Footer";
 
 export default function Admin() {
-  function handleSearch() {}
+  function ignore() {}
 
   return (
     <>
-      <Navbar onSearch={handleSearch} />
+      <Navbar onSearch={ignore} />
       <div className="admin-container">
         <NavbarAdmin />
         <div className="admin-content">
