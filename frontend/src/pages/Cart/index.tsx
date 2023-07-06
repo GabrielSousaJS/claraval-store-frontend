@@ -7,6 +7,7 @@ import * as formatters from "../../utils/formatters";
 import { Order } from "types/order";
 import { useEffect, useState } from "react";
 import * as orderService from "../../services/order-service";
+import { hasOpenOrder } from "utils/orders";
 
 export default function Cart() {
   const [order, setOrder] = useState<Order>();
@@ -18,9 +19,7 @@ export default function Cart() {
   async function getOrder() {
     const response = await orderService.getOrdersFromClient();
     let orders: Array<Order> = response.data;
-    const sortedOrder = orders.find(
-      (order) => order.orderStatus === "WAITING_PAYMENT"
-    );
+    const sortedOrder = hasOpenOrder(orders);
     if (sortedOrder) {
       sortedOrder.items.sort(
         (itemA, itemB) => itemA.product.id - itemB.product.id
@@ -28,6 +27,16 @@ export default function Cart() {
     }
 
     setOrder(sortedOrder);
+  }
+
+  async function handleFinalizeOrder() {
+    if (order?.id) {
+      let data = {
+        moment: String(new Date().toISOString()),
+      };
+      await orderService.finalizeOrder(order?.id ?? 0, data);
+    }
+    getOrder();
   }
 
   function ignore() {}
@@ -65,7 +74,10 @@ export default function Cart() {
                 </div>
               </div>
 
-              <button className="btn btn-secondary cart-button">
+              <button
+                className="btn btn-secondary cart-button"
+                onClick={handleFinalizeOrder}
+              >
                 Fechar pedido
               </button>
             </div>

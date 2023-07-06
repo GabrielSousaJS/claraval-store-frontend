@@ -3,7 +3,7 @@ import { Order } from "types/order";
 import { OrderItem } from "types/order-items";
 import { requestBackend } from "utils/requests";
 
-export function saveOrder(data: Order) {
+export async function saveOrder(data: Order) {
   const config: AxiosRequestConfig = {
     method: "POST",
     url: "api/orders",
@@ -11,19 +11,19 @@ export function saveOrder(data: Order) {
     withCredentials: true,
   };
 
-  return requestBackend(config);
+  return await requestBackend(config);
 }
 
-export function getOrdersFromClient() {
+export async function getOrdersFromClient() {
   const config: AxiosRequestConfig = {
     url: "api/orders",
     withCredentials: true,
   };
 
-  return requestBackend(config);
+  return await requestBackend(config);
 }
 
-export function addItemToOrder(id: number, data: OrderItem) {
+export async function addItemToOrder(id: number, data: OrderItem) {
   const config: AxiosRequestConfig = {
     method: "PUT",
     url: `api/orders/${id}/add-item`,
@@ -31,10 +31,10 @@ export function addItemToOrder(id: number, data: OrderItem) {
     withCredentials: true,
   };
 
-  return requestBackend(config);
+  return await requestBackend(config);
 }
 
-export function updateItem(
+export async function updateItem(
   orderId: number,
   productId: number,
   quantity: number
@@ -45,25 +45,26 @@ export function updateItem(
     withCredentials: true,
   };
 
-  return requestBackend(config);
+  return await requestBackend(config);
 }
 
-export function deleteItem(orderId: number, productId: number) {
+export async function deleteItem(orderId: number, productId: number) {
   const config: AxiosRequestConfig = {
     method: "DELETE",
     url: `api/orders/delete-item?orderId=${orderId}&productId=${productId}`,
     withCredentials: true,
   };
 
-  return requestBackend(config);
+  return await requestBackend(config);
 }
 
-export function deleteOrder(id: number) {
-    const config: AxiosRequestConfig = {
-        method: "DELETE",
-        url: `api/orders/${id}`,
-        withCredentials: true,
-    }
+export async function finalizeOrder(id: number, data: any) {
+  const config: AxiosRequestConfig = {
+    method: "PUT",
+    url: `api/orders/${id}/payment`,
+    data,
+    withCredentials: true,
+  };
 
-    return requestBackend(config);
+  return requestBackend(config);
 }

@@ -1,4 +1,5 @@
 import { OrderItem } from "./order-items";
+import { Payment } from "./payment";
 
 export type Order = {
     id?: number,
@@ -7,4 +8,5 @@ export type Order = {
     clientId: number;
     items: OrderItem[];
     getTotal?: number;
+    payment?: Payment;
 }

@@ -12,7 +12,12 @@ import { isAuthenticated } from "utils/auth";
 import * as orderService from "../../services/order-service";
 import { Order } from "types/order";
 import { OrderItem } from "types/order-items";
-import { getAuthData } from "utils/storage";
+import {
+  createNewOrderItem,
+  createOrder,
+  createOrderItem,
+  hasOpenOrder,
+} from "utils/orders";
 
 type Props = {
   product?: Product;
@@ -52,58 +57,41 @@ export default function ProductModal({ product, onModalClose }: Props) {
     }
   }
 
-  function handleAddItem() {
+  async function handleAddItem() {
     if (isAuthenticated()) {
-      if (hasOpenOrder()) {
-        let openOrder = hasOpenOrder();
+      if (orders) {
+        let openOrder = hasOpenOrder(orders);
 
-        if (product) {
-          let item: OrderItem = {
-            orderId: openOrder?.id,
-            product,
-            quantity: quantityProduct,
-          };
-
-          if (openOrder?.id) {
-            orderService.addItemToOrder(openOrder?.id, item);
+        if (openOrder) {
+          if (product) {
+            await addOrderItem(openOrder, product);
           }
-
-          navigate("/orders");
+        } else if (product) {
+          await addOrderItemNewOrder(product);
         }
-      } else {
-        if (product) {
-          let item: OrderItem = {
-            product,
-            quantity: quantityProduct,
-          };
-
-          let items: Array<OrderItem> = [];
-          items.push(item);
-
-          let order: Order = {
-            moment: String(new Date().toISOString()),
-            orderStatus: "WAITING_PAYMENT",
-            clientId: getAuthData().userId,
-            items,
-          };
-
-          orderService.saveOrder(order).then((response) => {
-            console.log(response.data);
-          });
-        }
+        navigate("/orders");
       }
-    } else {
-      navigate("/login");
+    } else navigate("/login");
+  }
+
+  async function addOrderItem(openOrder: Order, product: Product) {
+    let item = createOrderItem(openOrder, product, quantityProduct);
+
+    if (openOrder?.id) {
+      await orderService.addItemToOrder(openOrder?.id, item);
     }
   }
 
-  const hasOpenOrder = () => {
-    let openOrder = orders?.find(
-      (order) => order.orderStatus === "WAITING_PAYMENT"
-    );
+  async function addOrderItemNewOrder(product: Product) {
+    let item = createNewOrderItem(product, quantityProduct);
 
-    return openOrder;
-  };
+    let items: Array<OrderItem> = [];
+    items.push(item);
+
+    let order = createOrder(items);
+
+    await orderService.saveOrder(order);
+  }
 
   return (
     <div className="modal-background" onClick={() => onModalClose()}>
