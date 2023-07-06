@@ -28,3 +28,9 @@
     width: 100%;
     font-weight: 700;
 }
+
+@media (max-width: 635px) {
+    .cart-top-container {
+        flex-direction: column;
+    }
+}

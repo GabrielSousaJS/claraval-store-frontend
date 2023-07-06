@@ -5,10 +5,18 @@ import { getAuthData } from "./storage";
 
 export const hasOpenOrder = (orders: Array<Order>) => {
   let openOrder = orders.find(
-    (order) => order.orderStatus === "WAITING_PAYMENT"
+    (order) => order.orderStatus === "AGUARDANDO_PAGAMENTO"
   );
   return openOrder;
 };
+
+export const hasClosedOrders = (orders: Array<Order>) => {
+  let closedOrders = orders.filter(
+    (order) => order.orderStatus !== "AGUARDANDO_PAGAMENTO"
+  );
+
+  return closedOrders;
+}
 
 export const createOrderItem = (
   order: Order,
@@ -36,7 +44,7 @@ export const createNewOrderItem = (product: Product, quantity: number) => {
 export const createOrder = (items: Array<OrderItem>) => {
   let order = {
     moment: String(new Date().toISOString()),
-    orderStatus: "WAITING_PAYMENT",
+    orderStatus: "AGUARDANDO_PAGAMENTO",
     clientId: getAuthData().userId,
     items,
   };

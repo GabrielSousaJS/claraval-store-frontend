@@ -8,8 +8,11 @@ import { Order } from "types/order";
 import { useEffect, useState } from "react";
 import * as orderService from "../../services/order-service";
 import { hasOpenOrder } from "utils/orders";
+import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
+  const navigate = useNavigate();
+
   const [order, setOrder] = useState<Order>();
 
   useEffect(() => {
@@ -36,7 +39,12 @@ export default function Cart() {
       };
       await orderService.finalizeOrder(order?.id ?? 0, data);
     }
+    navigate("/orders/history");
     getOrder();
+  }
+
+  function handleGoToHistory() {
+    navigate("/orders/history");
   }
 
   function ignore() {}
@@ -46,7 +54,12 @@ export default function Cart() {
       <Navbar onSearch={ignore} />
       {order?.items.length ? (
         <div className="cart-card-container">
-          <h1>Meu carrinho</h1>
+          <div className="cart-top-container d-flex justify-content-between">
+            <h1>Meu carrinho</h1>
+            <button className="btn btn-secondary" onClick={handleGoToHistory}>
+              Histórico de pedidos
+            </button>
+          </div>
 
           <div className="row mt-3">
             <div className="col-lg-8 mb-5 cart-item">
@@ -85,7 +98,12 @@ export default function Cart() {
         </div>
       ) : (
         <div className="cart-card-container">
-          <h1>O seu carrinho está vazio</h1>
+          <div className="cart-top-container d-flex justify-content-between">
+            <h1>O seu carrinho está vazio</h1>
+            <button className="btn btn-secondary" onClick={handleGoToHistory}>
+              Histórico de pedidos
+            </button>
+          </div>
         </div>
       )}
 

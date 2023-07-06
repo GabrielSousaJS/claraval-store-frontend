@@ -1,0 +1,8 @@
+.history-card-container {
+    min-height: 100vh;
+    min-height: calc(100vh - 182px);
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    color: var(--text-color);
+}

@@ -1,0 +1,15 @@
+.order-products-info {
+    align-items: center;
+    padding: 10px 40px;
+    font-weight: 700;
+}
+
+.order-info {
+    text-align: center;
+}
+
+@media (max-width: 767px) {
+    .order-info {
+        padding-bottom: 20px;
+    }
+}

@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import * as categoryService from "../../../../services/category-service";
 import {
   dirtyAndValidate,
+  dirtyAndValidateAll,
+  hasAnyInvalid,
   toValues,
   updateAll,
   updateAndValidate,
@@ -42,7 +44,7 @@ export default function FormCategory() {
         setFormData(updateAll(formData, response.data));
       });
     }
-  });
+  }, [categoryId]);
 
   function handleInputChange(event: any) {
     setFormData(
@@ -60,10 +62,23 @@ export default function FormCategory() {
 
   function handleSubmit(event: any) {
     event.preventDefault();
+    const formDataValidated = dirtyAndValidateAll(formData);
+    if (hasAnyInvalid(formDataValidated)) {
+      setFormData(formDataValidated);
+      return;
+    }
 
     const requestBody = toValues(formData);
 
-    console.log(requestBody);
+    if (isEditing) {
+      return categoryService.update(Number(categoryId), requestBody).then(() => {
+        navigate('/admin/categories');
+      });
+    } else {
+      return categoryService.insert(requestBody).then(() => {
+        navigate("/admin/categories");
+      })
+    }
   }
 
   return (

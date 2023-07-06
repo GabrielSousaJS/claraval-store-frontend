@@ -7,6 +7,7 @@ import FormProducts from "pages/Admin/Products/FormProducts";
 import List from "pages/Admin/Products/List";
 import Cart from "pages/Cart";
 import Login from "pages/Login";
+import OrderHistory from "pages/OrderHistory";
 import Products from "pages/Products";
 import ProductsFilter from "pages/ProductsFilter";
 import SingUp from "pages/SignUp";
@@ -50,6 +51,14 @@ export default function RoutesApp() {
           element={
             <PrivateRoute roles={["ROLE_CLIENT"]}>
               <Cart />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/orders/history"
+          element={
+            <PrivateRoute roles={["ROLE_CLIENT"]}>
+              <OrderHistory />
             </PrivateRoute>
           }
         />

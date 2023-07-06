@@ -17,10 +17,10 @@ export function findById(id: number) {
   return requestBackend(config);
 }
 
-export function insert(id: number, data: any) {
+export function insert(data: any) {
   const config: AxiosRequestConfig = {
     method: "POST",
-    url: `url/categories/${id}`,
+    url: `api/categories`,
     data,
     withCredentials: true,
   };

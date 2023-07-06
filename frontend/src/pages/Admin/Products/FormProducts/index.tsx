@@ -113,7 +113,7 @@ export default function FormProducts() {
         setFormData(updateAll(formData, response.data));
       });
     }
-  });
+  }, [productId]);
 
   function handleInputChange(event: any) {
     setFormData(
