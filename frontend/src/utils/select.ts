@@ -14,11 +14,7 @@ export const selectStyles = {
     }),
     option: (provided: any) => ({
       ...provided,
-      color: 'var(--secondary-color)',
-    }),
-    indicatorSeparator: (provided: any) => ({
-      ...provided,
-      display: 'none',
+      color: 'var(--text-color)',
     }),
   };
   

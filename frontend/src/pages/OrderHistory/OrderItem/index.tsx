@@ -11,12 +11,6 @@ type Props = {
 export default function OrderItem({ order }: Props) {
   const items = order.items;
 
-  function formatDate() {
-    const date = new Date(order.moment);
-    const formattedDate = Intl.DateTimeFormat("pt-BR").format(date);
-    return formattedDate;
-  }
-
   return (
     <div className="base-card order-item-container mt-4">
       <div className="row order-products-info">
@@ -27,7 +21,7 @@ export default function OrderItem({ order }: Props) {
               </div>
           ))}
         </div>
-        <p className="col-md-3 m-0 order-info">{formatDate()}</p>
+        <p className="col-md-3 m-0 order-info">{formatters.formatDate(order.moment)}</p>
         <p className="col-md-3 m-0 order-info">
           R$ {formatters.formatPrice(Number(order.getTotal))}
         </p>

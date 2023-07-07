@@ -2,6 +2,7 @@ import PrivateRoute from "components/PrivateRoute";
 import Admin from "pages/Admin";
 import CategoriesAdmin from "pages/Admin/Categories";
 import FormCategory from "pages/Admin/Categories/FormCategory";
+import Orders from "pages/Admin/Orders";
 import ProductsAdmin from "pages/Admin/Products";
 import FormProducts from "pages/Admin/Products/FormProducts";
 import List from "pages/Admin/Products/List";
@@ -43,7 +44,7 @@ export default function RoutesApp() {
             path="/admin/categories/:categoryId"
             element={<FormCategory />}
           />
-          <Route path="/admin/orders" element={<h1>Página de pedidos</h1>} />
+          <Route path="/admin/orders" element={<Orders />} />
           <Route path="/admin/users" element={<h1>Página de usuários</h1>} />
         </Route>
         <Route

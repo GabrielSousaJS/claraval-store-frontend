@@ -24,7 +24,7 @@ export default function CategoriesAdmin() {
     <div className="category-crud-container">
       <div className="category-crud-bar-container">
         <div>
-          <h2 className="category-card-title">Lista de categorias</h2>
+          <h4 className="category-card-title">Lista de categorias</h4>
         </div>
         <Link to={"/admin/categories/create"}>
           <ButtonPrimary text={"Adicionar"} />

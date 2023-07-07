@@ -23,6 +23,15 @@ export async function getOrdersFromClient() {
   return await requestBackend(config);
 }
 
+export async function getAllOrders() {
+  const config: AxiosRequestConfig = {
+    url: "api/orders/all-orders",
+    withCredentials: true,
+  };
+
+  return await requestBackend(config);
+}
+
 export async function addItemToOrder(id: number, data: OrderItem) {
   const config: AxiosRequestConfig = {
     method: "PUT",
@@ -66,5 +75,15 @@ export async function finalizeOrder(id: number, data: any) {
     withCredentials: true,
   };
 
-  return requestBackend(config);
+  return await requestBackend(config);
+}
+
+export async function updateOrderStatus(id: number, status: string) {
+  const config: AxiosRequestConfig = {
+    method: "PUT",
+    url: `/api/orders/${id}/status?orderStatus=${status}`,
+    withCredentials: true,
+  };
+
+  return await requestBackend(config);
 }

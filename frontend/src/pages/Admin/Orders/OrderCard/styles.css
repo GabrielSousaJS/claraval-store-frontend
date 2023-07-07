@@ -1,0 +1,18 @@
+.order-card-container {
+    padding: 10px 40px;
+}
+
+.order-info {
+    color: var(--text-color);
+    font-weight: 700;
+}
+
+.order-text-item {
+    margin: 0;
+}
+
+@media (max-width: 767px) {
+    .order-text-item {
+        margin-bottom: 20px;
+    }
+}

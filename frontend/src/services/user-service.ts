@@ -10,3 +10,12 @@ export function insertUser(data: any) {
 
   return requestBackend(config);
 }
+
+export function getById(id: number) {
+  const config: AxiosRequestConfig = {
+    url: `api/users/${id}`,
+    withCredentials: true,
+  };
+
+  return requestBackend(config);
+}
