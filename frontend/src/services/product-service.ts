@@ -24,6 +24,17 @@ export function findProdutsByCategory(id: number, productName: string) {
   return requestBackend(config);
 }
 
+export function insert(data: any) {
+  const config: AxiosRequestConfig = {
+    method: "POST",
+    url: "api/products",
+    withCredentials: true,
+    data
+  };
+
+  return requestBackend(config);
+}
+
 export function updateProduct(id: number, data: any) {
   const config: AxiosRequestConfig = {
     method: "PUT",

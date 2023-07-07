@@ -10,13 +10,15 @@ import CategoryCrudCard from "./CategoryCrudCard";
 export default function CategoriesAdmin() {
   const [categories, setCategories] = useState<Array<Category>>();
 
-  useEffect(() => getCategories(), []);
+  useEffect(() => {
+    getCategories();
+  }, [])
 
-  const getCategories = () => {
-    categoryService.findAll().then((response) => {
+  async function getCategories() {
+    await categoryService.findAll().then((response) => {
       setCategories(response.data);
-    });
-  };
+    })
+  }
 
   return (
     <div className="category-crud-container">

@@ -9,10 +9,14 @@ export default function NavCategories() {
   const [categories, setCategories] = useState<Array<Category>>();
 
   useEffect(() => {
-    categoryService.findAll().then((response) => {
-      setCategories(response.data);
-    });
+    getCategories();
   }, []);
+
+  async function getCategories() {
+    await categoryService.findAll().then((response) => {
+      setCategories(response.data);
+    })
+  }
 
   return (
     <div className="bg-secondary container-category">
@@ -20,9 +24,7 @@ export default function NavCategories() {
         <ul className="main-menu-category">
           {categories?.map((category) => (
             <li key={category.id} className="item-category">
-              <NavLink to={`/category/${category.id}`}>
-                {category.name}
-              </NavLink>
+              <NavLink to={`/category/${category.id}`}>{category.name}</NavLink>
             </li>
           ))}
         </ul>

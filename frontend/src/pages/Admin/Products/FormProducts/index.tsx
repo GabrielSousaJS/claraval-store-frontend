@@ -7,6 +7,8 @@ import * as categoryService from "../../../../services/category-service";
 import * as productService from "../../../../services/product-service";
 import {
   dirtyAndValidate,
+  dirtyAndValidateAll,
+  hasAnyInvalid,
   toValues,
   updateAll,
   updateAndValidate,
@@ -131,10 +133,25 @@ export default function FormProducts() {
 
   function handleSubmit(event: any) {
     event.preventDefault();
+    const formDataValidated = dirtyAndValidateAll(formData);
+    if (hasAnyInvalid(formDataValidated)) {
+      setFormData(formDataValidated);
+      return;
+    }
 
     const requestBody = toValues(formData);
 
-    console.log(requestBody);
+    if (isEditing) {
+      return productService
+        .updateProduct(Number(productId), requestBody)
+        .then(() => {
+          navigate("/admin/products");
+        });
+    } else {
+      return productService.insert(requestBody).then(() => {
+        navigate("/admin/products");
+      });
+    }
   }
 
   return (
