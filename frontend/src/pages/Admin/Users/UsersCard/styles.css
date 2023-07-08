@@ -1,0 +1,12 @@
+.user-card-container {
+  padding: 10px 30px;
+  color: var(--text-color);
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 767px) {
+  .user-text-info {
+    padding: 10px
+  }
+}

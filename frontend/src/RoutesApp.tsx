@@ -6,6 +6,8 @@ import Orders from "pages/Admin/Orders";
 import ProductsAdmin from "pages/Admin/Products";
 import FormProducts from "pages/Admin/Products/FormProducts";
 import List from "pages/Admin/Products/List";
+import Users from "pages/Admin/Users";
+import FormUserAdmin from "pages/Admin/Users/FormUserAdmin";
 import Cart from "pages/Cart";
 import Login from "pages/Login";
 import OrderHistory from "pages/OrderHistory";
@@ -45,7 +47,8 @@ export default function RoutesApp() {
             element={<FormCategory />}
           />
           <Route path="/admin/orders" element={<Orders />} />
-          <Route path="/admin/users" element={<h1>Página de usuários</h1>} />
+          <Route path="/admin/users" element={<Users />} />
+          <Route path="/admin/users/create" element={<FormUserAdmin />} />
         </Route>
         <Route
           path="/orders"
