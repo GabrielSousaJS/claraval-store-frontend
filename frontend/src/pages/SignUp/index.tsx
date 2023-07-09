@@ -192,7 +192,6 @@ export default function SingUp() {
     ) {
       setFormUserData(formDataUserValidated);
       setFormAddressData(formDataAddressValidated);
-      console.log("passou auqi");
       return;
     }
 

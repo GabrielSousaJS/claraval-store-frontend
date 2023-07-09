@@ -1,8 +1,14 @@
+import FormInput from "components/FormInput";
 import "./styles.css";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { dirtyAndValidate, updateAndValidate } from "utils/forms";
+import { dirtyAndValidate, dirtyAndValidateAll, hasAnyInvalid, setBackendErrors, toValues, updateAndValidate } from "utils/forms";
+import ReactDatePicker from "react-datepicker";
+import ptBR from "date-fns/locale/pt-BR";
+import { Link } from "react-router-dom";
+import ButtonInverse from "components/ButtonInverse";
+import * as userService from "../../../../services/user-service";
 
 export default function FormUserAdmin() {
   const [formUserData, setFormUserData] = useState<any>({
@@ -166,11 +172,171 @@ export default function FormUserAdmin() {
     );
   }
 
+  function handleSubmit(event: any) {
+    event.preventDefault();
+    const formDataUserValidated = dirtyAndValidateAll(formUserData);
+    const formDataAddressValidated = dirtyAndValidateAll(formAddressData);
+
+    if (
+      hasAnyInvalid(formDataUserValidated) &&
+      hasAnyInvalid(formDataAddressValidated)
+    ) {
+      setFormUserData(formDataUserValidated);
+      setFormAddressData(formDataAddressValidated);
+      return;
+    }
+
+    const userAddress = toValues(formAddressData);
+    const requestBody = toValues(formUserData);
+
+    requestBody.birthDate = formatDate(selectedDate);
+    requestBody.address = userAddress;
+
+    return userService
+      .insertAdmin(requestBody)
+      .then(() => {
+        navigate("/admin/users");
+      })
+      .catch((error) => {
+        const newInputs = setBackendErrors(
+          formDataUserValidated,
+          error.response.data.errors
+        );
+        setFormUserData(newInputs);
+      });
+  }
+
   return (
     <div className="user-form-container">
       <div className="user-form-title">
         <h3>Adicionar administrador</h3>
       </div>
+
+      <form onSubmit={handleSubmit}>
+        <div className="row base-card card-user-form">
+          <div className="col-md-8 form-user-container">
+            <FormInput
+              {...formUserData.name}
+              className="form-control base-input claraval-form-control"
+              onTurnDirty={handleTurnDiryUser}
+              onChange={handleInputUserChange}
+            />
+            <div className="form-error">{formUserData.name.message}</div>
+          </div>
+
+          <div className="col-md-4 form-user-container">
+            <ReactDatePicker
+              selected={selectedDate}
+              id="birthDate"
+              locale={ptBR}
+              className="form-control base-input claraval-form-control"
+              placeholderText="Data de nascimento"
+              onChange={handleDateChange}
+              dateFormat={"dd/MM/yyyy"}
+            />
+            {!selectedDate ? (
+              <div className="date-picker-error">{errorDateMessage}</div>
+            ) : (
+              <div></div>
+            )}
+          </div>
+
+          <div className="col-sm-12 form-user-container">
+            <FormInput
+              {...formUserData.email}
+              className="form-control base-input claraval-form-control"
+              onTurnDirty={handleTurnDiryUser}
+              onChange={handleInputUserChange}
+            />
+            <div className="form-error">{formUserData.email.message}</div>
+          </div>
+
+          <div className="col-sm-12 form-user-container">
+            <FormInput
+              {...formUserData.password}
+              className="form-control base-input claraval-form-control"
+              onTurnDirty={handleTurnDiryUser}
+              onChange={handleInputUserChange}
+            />
+            <div className="form-error">{formUserData.password.message}</div>
+          </div>
+
+          <div className="col-md-9 form-user-container">
+            <FormInput
+              {...formAddressData.publicPlace}
+              className="form-control base-input claraval-form-control"
+              onTurnDirty={handleTurnDirtyAddress}
+              onChange={handleInputAdressChange}
+            />
+            <div className="form-error">
+              {formAddressData.publicPlace.message}
+            </div>
+          </div>
+
+          <div className="col-md-3 form-user-container">
+            <FormInput
+              {...formAddressData.number}
+              className="form-control base-input claraval-form-control"
+              onTurnDirty={handleTurnDirtyAddress}
+              onChange={handleInputAdressChange}
+            />
+            <div className="form-error">{formAddressData.number.message}</div>
+          </div>
+
+          <div className="col-md-4 form-user-container">
+            <FormInput
+              {...formAddressData.city}
+              className="form-control base-input claraval-form-control"
+              onTurnDirty={handleTurnDirtyAddress}
+              onChange={handleInputAdressChange}
+            />
+            <div className="form-error">{formAddressData.city.message}</div>
+          </div>
+
+          <div className="col-md-4 form-user-container">
+            <FormInput
+              {...formAddressData.state}
+              className="form-control base-input claraval-form-control"
+              onTurnDirty={handleTurnDirtyAddress}
+              onChange={handleInputAdressChange}
+            />
+            <div className="form-error">{formAddressData.state.message}</div>
+          </div>
+
+          <div className="col-md-4 form-user-container">
+            <FormInput
+              {...formAddressData.cep}
+              className="form-control base-input claraval-form-control"
+              onTurnDirty={handleTurnDirtyAddress}
+              onChange={handleInputAdressChange}
+            />
+            <div className="form-error">{formAddressData.cep.message}</div>
+          </div>
+
+          <div className="col-sm-6 form-user-container">
+            <FormInput
+              {...formAddressData.country}
+              className="form-control base-input claraval-form-control"
+              onTurnDirty={handleTurnDirtyAddress}
+              onChange={handleInputAdressChange}
+            />
+            <div className="form-error">{formAddressData.country.message}</div>
+          </div>
+
+          <div className="button-user-form">
+            <div className="button-user-cancel">
+              <Link to="/admin/users">
+                <ButtonInverse text={"cancelar"} />
+              </Link>
+            </div>
+            <div className="button-user-confirm">
+              <button className="btn btn-secondary btn-user-singup">
+                cadastrar
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   );
 }
