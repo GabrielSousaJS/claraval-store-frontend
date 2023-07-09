@@ -4,7 +4,13 @@ import Logo from "../../assets/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import FormInput from "components/FormInput";
-import { dirtyAndValidate, toValues, updateAndValidate } from "utils/forms";
+import {
+  dirtyAndValidate,
+  dirtyAndValidateAll,
+  hasAnyInvalid,
+  toValues,
+  updateAndValidate,
+} from "utils/forms";
 import * as authService from "../../services/auth-service";
 import { saveAuthData } from "utils/storage";
 import { AuthContext } from "AuthContext";
@@ -52,6 +58,14 @@ export default function Login() {
 
   function handleSubmit(event: any) {
     event.preventDefault();
+
+    const formDataValidated = dirtyAndValidateAll(formData);
+
+    if (hasAnyInvalid(formDataValidated)) {
+      setFormData(formDataValidated);
+      return;
+    }
+
     const requestBody = toValues(formData);
     authService
       .loginRequest(requestBody)
@@ -70,7 +84,9 @@ export default function Login() {
         }
       })
       .catch((error) => {
-        setHasError(true);
+        if (error.response.status === 400) {
+          setHasError(true);
+        }
       });
   }
 
@@ -85,6 +101,7 @@ export default function Login() {
       <section>
         <div className="modal-box login-container p-4">
           <h3 className="pb-3">Login</h3>
+          {hasError && (<p className="text-danger">Login inválido, verifique os dados</p>)}
           <form onSubmit={handleSubmit}>
             <div className="input-login">
               <label>e-mail</label>
@@ -95,11 +112,6 @@ export default function Login() {
                 onChange={handleInputChange}
               />
               <div className="form-error">{formData.username.message}</div>
-              {hasError && (
-                <div className="form-error">
-                  Erro ao tentar efetuar o login. Verifique os dados.
-                </div>
-              )}
             </div>
 
             <div className="input-login">

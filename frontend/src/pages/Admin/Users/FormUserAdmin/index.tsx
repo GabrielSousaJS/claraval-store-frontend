@@ -3,7 +3,14 @@ import "./styles.css";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { dirtyAndValidate, dirtyAndValidateAll, hasAnyInvalid, setBackendErrors, toValues, updateAndValidate } from "utils/forms";
+import {
+  dirtyAndValidate,
+  dirtyAndValidateAll,
+  hasAnyInvalid,
+  setBackendErrors,
+  toValues,
+  updateAndValidate,
+} from "utils/forms";
 import ReactDatePicker from "react-datepicker";
 import ptBR from "date-fns/locale/pt-BR";
 import { Link } from "react-router-dom";
@@ -177,12 +184,18 @@ export default function FormUserAdmin() {
     const formDataUserValidated = dirtyAndValidateAll(formUserData);
     const formDataAddressValidated = dirtyAndValidateAll(formAddressData);
 
-    if (
-      hasAnyInvalid(formDataUserValidated) &&
-      hasAnyInvalid(formDataAddressValidated)
-    ) {
-      setFormUserData(formDataUserValidated);
+    if (hasAnyInvalid(formDataAddressValidated)) {
       setFormAddressData(formDataAddressValidated);
+      return;
+    }
+
+    if (hasAnyInvalid(formDataUserValidated)) {
+      setFormUserData(formDataUserValidated);
+      return;
+    }
+
+    if (selectedDate === null) {
+      setErrorMessage("Campo inválido");
       return;
     }
 

@@ -6,7 +6,7 @@ import * as productService from "../../services/product-service";
 import ProductCard from "components/ProductCard";
 import Navbar from "components/Navbar";
 import Footer from "components/Footer";
-import ProductModal from "components/ProductModel";
+import ProductModal from "components/ProductModal";
 
 export default function Products() {
   const [products, setProducts] = useState<Array<Product>>();

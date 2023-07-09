@@ -16,7 +16,7 @@ export default function List() {
     productService.findAll("").then((response) => {
       setProducts(response.data);
     });
-  };
+  };  
 
   return (
     <div className="product-card-container">

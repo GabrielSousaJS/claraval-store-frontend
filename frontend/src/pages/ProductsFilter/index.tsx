@@ -7,7 +7,7 @@ import * as productService from "../../services/product-service";
 import ProductCard from "components/ProductCard";
 import Footer from "components/Footer";
 import Navbar from "components/Navbar";
-import ProductModal from "components/ProductModel";
+import ProductModal from "components/ProductModal";
 
 type UrlParams = {
   categoryId: string;

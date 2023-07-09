@@ -12,12 +12,12 @@ export default function CategoriesAdmin() {
 
   useEffect(() => {
     getCategories();
-  }, [])
+  }, []);
 
   async function getCategories() {
     await categoryService.findAll().then((response) => {
       setCategories(response.data);
-    })
+    });
   }
 
   return (

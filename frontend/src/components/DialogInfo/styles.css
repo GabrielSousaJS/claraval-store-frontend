@@ -1,0 +1,14 @@
+.modal-box-dialog {
+  width: 500px;
+}
+
+.btn-dialog-info {
+  font-weight: 700;
+  margin-top: 15px;
+}
+
+@media (max-width: 576px) {
+  .modal-box-dialog {
+    width: 80%;
+  }
+}

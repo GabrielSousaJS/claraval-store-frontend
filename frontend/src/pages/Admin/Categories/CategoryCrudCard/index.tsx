@@ -3,6 +3,8 @@ import "./styles.css";
 import { Category } from "types/category";
 import * as categoryService from "../../../../services/category-service";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import DialogInfo from "components/DialogInfo";
 
 type Props = {
   category: Category;
@@ -10,15 +12,32 @@ type Props = {
 };
 
 export default function CategoryCrudCard({ category, onDelete }: Props) {
+  const [dialogInfoData, setDialogInfoData] = useState({
+    visible: false,
+    message: "",
+  });
+
   const handleDelete = (categoryId: number) => {
     if (!window.confirm("Tem certeza que deseja deletar?")) {
       return;
     }
 
-    categoryService.deleteById(categoryId).then(() => {
-      onDelete();
-    });
+    categoryService
+      .deleteById(categoryId)
+      .then(() => {
+        onDelete();
+      })
+      .catch((error) => {
+        setDialogInfoData({
+          visible: true,
+          message: error.response.data.error,
+        });
+      });
   };
+
+  function handleDialogInfoClose() {
+    setDialogInfoData({ ...dialogInfoData, visible: false });
+  }
 
   return (
     <div className="base-card category-crud-card">
@@ -40,6 +59,12 @@ export default function CategoryCrudCard({ category, onDelete }: Props) {
           </button>
         </Link>
       </div>
+      {dialogInfoData.visible && (
+        <DialogInfo
+          message={dialogInfoData.message}
+          onDialogClose={handleDialogInfoClose}
+        />
+      )}
     </div>
   );
 }

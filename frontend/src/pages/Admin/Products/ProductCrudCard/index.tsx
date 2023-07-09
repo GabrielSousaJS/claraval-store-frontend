@@ -5,6 +5,8 @@ import * as productService from "../../../../services/product-service";
 import ProductPrice from "components/ProductPrice";
 import CategoryBadge from "../CategoryBadge";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import DialogInfo from "components/DialogInfo";
 
 type Props = {
   product: Product;
@@ -12,15 +14,32 @@ type Props = {
 };
 
 export default function ProductCrudCard({ product, onDelete }: Props) {
+  const [dialogInfoData, setDialogInfoData] = useState({
+    visible: false,
+    message: "",
+  });
+
   const handleDelete = (productId: number) => {
     if (!window.confirm("Tem certeza que deseja deletar?")) {
       return;
     }
 
-    productService.deleteProductById(productId).then(() => {
-      onDelete();
-    });
+    productService
+      .deleteProductById(productId)
+      .then(() => {
+        onDelete();
+      })
+      .catch((error) => {
+        setDialogInfoData({
+          visible: true,
+          message: error.response.data.error,
+        });
+      });
   };
+
+  function handleDialogInfoClose() {
+    setDialogInfoData({ ...dialogInfoData, visible: false });
+  }
 
   return (
     <div className="base-card product-crud-card">
@@ -54,6 +73,12 @@ export default function ProductCrudCard({ product, onDelete }: Props) {
           </button>
         </Link>
       </div>
+      {dialogInfoData.visible && (
+        <DialogInfo
+          message={dialogInfoData.message}
+          onDialogClose={handleDialogInfoClose}
+        />
+      )}
     </div>
   );
 }
