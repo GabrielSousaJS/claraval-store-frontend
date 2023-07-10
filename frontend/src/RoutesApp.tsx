@@ -10,6 +10,7 @@ import Users from "pages/Admin/Users";
 import FormUserAdmin from "pages/Admin/Users/FormUserAdmin";
 import Cart from "pages/Cart";
 import Login from "pages/Login";
+import NotFound from "pages/NotFound";
 import OrderHistory from "pages/OrderHistory";
 import Products from "pages/Products";
 import ProductsFilter from "pages/ProductsFilter";
@@ -66,6 +67,7 @@ export default function RoutesApp() {
             </PrivateRoute>
           }
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
