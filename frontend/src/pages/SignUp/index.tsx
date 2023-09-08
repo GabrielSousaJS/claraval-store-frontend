@@ -186,18 +186,10 @@ export default function SingUp() {
     const formDataUserValidated = dirtyAndValidateAll(formUserData);
     const formDataAddressValidated = dirtyAndValidateAll(formAddressData);
 
-    if (hasAnyInvalid(formDataAddressValidated)) {
-      setFormAddressData(formDataAddressValidated);
-      return;
-    }
-
-    if (hasAnyInvalid(formDataUserValidated)) {
-      setFormUserData(formDataUserValidated);
-      return;
-    }
-
-    if (selectedDate === null) {
+    if (hasAnyInvalid(formDataUserValidated) && hasAnyInvalid(formDataAddressValidated) && selectedDate === null) {
       setErrorMessage("Campo inválido");
+      setFormUserData(formDataUserValidated);
+      setFormAddressData(formDataAddressValidated)
       return;
     }
 
